@@ -13,17 +13,6 @@ class _nameState extends State<HomePage> {
   Widget build(BuildContext context) {
     int _selectedIndex = 0;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BEarthly '),
-        leading: Icon(Icons.ac_unit_rounded),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.person_outlined),
-            tooltip: 'Login',
-          ),
-        ],
-      ),
       body: Stack(
         children: [
           Image.asset(
