@@ -1,4 +1,5 @@
 import 'package:bearthly/onboarding_screens.dart';
+import 'package:bearthly/sign_up_pages/components/welcomePage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,8 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(primarySwatch: Colors.teal, canvasColor: Colors.teal),
-        debugShowCheckedModeBanner: false,
-        home: OnBoardingScreen());
+      theme: ThemeData(primarySwatch: Colors.teal, canvasColor: Colors.teal),
+      debugShowCheckedModeBanner: false,
+      home: WelcomePage(),
+    );
   }
 }
