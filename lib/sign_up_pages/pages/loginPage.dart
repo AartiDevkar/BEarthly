@@ -15,8 +15,6 @@ class LoginPage extends StatelessWidget {
   final double _sigmaX = 5; // from 0-10
   final double _sigmaY = 5; // from 0-10
   final double _opacity = 0.2;
-  final double _width = 300;
-  final double _height = 200;
   final _formKey = GlobalKey<FormState>();
 
   // sign user in method

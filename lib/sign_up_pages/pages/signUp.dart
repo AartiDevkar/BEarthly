@@ -15,8 +15,6 @@ class Signup extends StatelessWidget {
   final double _sigmaX = 5; // from 0-10
   final double _sigmaY = 5; // from 0-10
   final double _opacity = 0.2;
-  final double _width = 30;
-  final double _height = 200;
   final _formKey = GlobalKey<FormState>();
 
   // sign user in method
@@ -47,7 +45,7 @@ class Signup extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   IconButton(
                     icon: const Icon(Icons.arrow_back_ios),
                     color: Colors.white,
@@ -55,7 +53,7 @@ class Signup extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.20),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.10),
                   const Text("Sign Up",
                       style: TextStyle(
                           color: Colors.white,
@@ -74,7 +72,7 @@ class Signup extends StatelessWidget {
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(30))),
                         width: MediaQuery.of(context).size.width * 0.9,
-                        height: MediaQuery.of(context).size.height * 0.49,
+                        height: MediaQuery.of(context).size.height * 0.70,
                         child: Form(
                           key: _formKey,
                           child: Center(
@@ -84,25 +82,31 @@ class Signup extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const Text(
-                                    "Look like you don't have an account. Let's create a new account for",
+                                    "Look like you don't have an account. Let's create a new account ",
                                     // ignore: prefer_const_constructors
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                     textAlign: TextAlign.start),
                                 // ignore: prefer_const_constructors
-                                const Text(
-                                  "jane.doe@gmail.com",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.start,
+
+                                const SizedBox(height: 10),
+
+                                MyTextField(
+                                  controller: usernameController,
+                                  hintText: 'Enter Your Full Name',
+                                  obscureText: false,
                                 ),
-                                const SizedBox(height: 30),
+                                const SizedBox(height: 10),
 
                                 MyTextField(
                                   controller: usernameController,
                                   hintText: 'Email',
+                                  obscureText: false,
+                                ),
+                                const SizedBox(height: 10),
+                                MyTextField(
+                                  controller: usernameController,
+                                  hintText: 'Contact',
                                   obscureText: false,
                                 ),
 

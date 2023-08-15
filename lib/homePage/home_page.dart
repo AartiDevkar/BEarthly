@@ -11,6 +11,7 @@ class _nameState extends State<HomePage> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     int selectedIndex = 0;
     return Scaffold(
       body: Stack(
