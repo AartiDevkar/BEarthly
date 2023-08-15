@@ -12,11 +12,11 @@ class WelcomePage extends StatelessWidget {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  double _sigmaX = 5; // from 0-10
-  double _sigmaY = 5; // from 0-10
-  double _opacity = 0.2;
-  double _width = 300;
-  double _height = 200;
+  final double _sigmaX = 5; // from 0-10
+  final double _sigmaY = 5; // from 0-10
+  final double _opacity = 0.2;
+  final double _width = 300;
+  final double _height = 200;
   final _formKey = GlobalKey<FormState>();
 
   // sign user in method
@@ -27,7 +27,7 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Stack(
             alignment: Alignment.center,
@@ -49,7 +49,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 90),
+                    padding: const EdgeInsets.symmetric(horizontal: 90),
                     child: const Text("BEarthly",
                         style: TextStyle(
                             color: Colors.white,
@@ -64,10 +64,10 @@ class WelcomePage extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 0, 0, 1)
+                            color: const Color.fromRGBO(0, 0, 0, 1)
                                 .withOpacity(_opacity),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(30))),
+                                const BorderRadius.all(Radius.circular(30))),
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: MediaQuery.of(context).size.height * 0.63,
                         child: Form(
@@ -101,7 +101,7 @@ class WelcomePage extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => HomePage()),
+                                            builder: (context) => const HomePage()),
                                       );
                                     } else {
                                       print('not valid');
@@ -141,12 +141,12 @@ class WelcomePage extends StatelessWidget {
                                 const SizedBox(height: 5),
 
                                 // google
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       // facebook button
 
                                       SizedBox(height: 5),
@@ -173,20 +173,20 @@ class WelcomePage extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      Row(
+                                      const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         // ignore: prefer_const_literals_to_create_immutables
                                         children: [
-                                          const Text(
+                                          Text(
                                             'Don\'t have an account?',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 20),
                                             textAlign: TextAlign.start,
                                           ),
-                                          const SizedBox(width: 4),
-                                          const Text(
+                                          SizedBox(width: 4),
+                                          Text(
                                             'Sign Up',
                                             style: TextStyle(
                                                 color: Color.fromARGB(

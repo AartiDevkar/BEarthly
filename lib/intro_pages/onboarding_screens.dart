@@ -1,4 +1,3 @@
-import 'package:bearthly/homePage/home_page.dart';
 import 'package:bearthly/intro_pages/intro_page2.dart';
 import 'package:bearthly/intro_pages/intro_page3.dart';
 
@@ -16,7 +15,7 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  PageController _controller = PageController();
+  final PageController _controller = PageController();
 
   bool onLastPage = false;
 
@@ -40,7 +39,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
           //dot indicators
           Container(
-              alignment: Alignment(0, 0.8),
+              alignment: const Alignment(0, 0.8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -77,7 +76,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       : GestureDetector(
                           onTap: () {
                             _controller.nextPage(
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 curve: Curves.easeIn);
                           },
                           child: const Text(

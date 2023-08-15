@@ -12,11 +12,11 @@ class LoginPage extends StatelessWidget {
   // text editing controllers
   final passwordController = TextEditingController();
 
-  double _sigmaX = 5; // from 0-10
-  double _sigmaY = 5; // from 0-10
-  double _opacity = 0.2;
-  double _width = 300;
-  double _height = 200;
+  final double _sigmaX = 5; // from 0-10
+  final double _sigmaY = 5; // from 0-10
+  final double _opacity = 0.2;
+  final double _width = 300;
+  final double _height = 200;
   final _formKey = GlobalKey<FormState>();
 
   // sign user in method
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Stack(
             alignment: Alignment.center,

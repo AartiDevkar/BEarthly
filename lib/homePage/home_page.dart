@@ -11,7 +11,7 @@ class _nameState extends State<HomePage> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 0;
+    int selectedIndex = 0;
     return Scaffold(
       body: Stack(
         children: [

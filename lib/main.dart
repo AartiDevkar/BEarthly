@@ -1,5 +1,3 @@
-import 'package:bearthly/intro_pages/onboarding_screens.dart';
-
 import 'package:bearthly/sign_up_pages/pages/welcomePage.dart';
 import 'package:flutter/material.dart';
 

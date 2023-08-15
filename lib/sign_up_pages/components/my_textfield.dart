@@ -5,7 +5,7 @@ class MyTextField extends StatefulWidget {
   final String hintText;
   final bool obscureText;
 
-  MyTextField({
+  const MyTextField({
     Key? key,
     required this.controller,
     required this.hintText,
@@ -44,7 +44,7 @@ class MyPasswordTextField extends StatefulWidget {
   final String hintText;
   final bool obscureText;
 
-  MyPasswordTextField({
+  const MyPasswordTextField({
     Key? key,
     required this.controller,
     required this.hintText,
