@@ -1,7 +1,8 @@
-import 'package:bearthly/home_page.dart';
+import 'package:bearthly/homePage/home_page.dart';
 import 'package:bearthly/intro_pages/intro_page2.dart';
 import 'package:bearthly/intro_pages/intro_page3.dart';
-import 'package:bearthly/sign_up_pages/components/welcomePage.dart';
+
+import 'package:bearthly/sign_up_pages/pages/welcomePage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bearthly/intro_pages/intro_page1.dart';

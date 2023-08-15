@@ -1,5 +1,6 @@
-import 'package:bearthly/onboarding_screens.dart';
-import 'package:bearthly/sign_up_pages/components/welcomePage.dart';
+import 'package:bearthly/intro_pages/onboarding_screens.dart';
+
+import 'package:bearthly/sign_up_pages/pages/welcomePage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.teal, canvasColor: Colors.teal),
       debugShowCheckedModeBanner: false,
+      // ignore: prefer_const_constructors
       home: WelcomePage(),
     );
   }

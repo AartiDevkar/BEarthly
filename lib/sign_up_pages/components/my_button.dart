@@ -12,12 +12,12 @@ class MyButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 71, 233, 133),
+          color: Color.fromARGB(255, 89, 207, 105),
           borderRadius: BorderRadius.circular(8),
         ),
         child: const Center(
           child: Text(
-            "Continue",
+            "Log In",
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
           ),
@@ -39,7 +39,7 @@ class MyButtonAgree extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 71, 233, 133),
+          color: Color.fromARGB(255, 10, 169, 119),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(

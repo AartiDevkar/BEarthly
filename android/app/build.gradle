@@ -55,7 +55,11 @@ android {
         }
     }
 }
-
+dependencies {
+  // Add this line
+  implementation 'com.google.firebase:firebase-core:17.0.0'
+}
 flutter {
     source '../..'
 }
+apply plugin: 'com.google.gms.google-services'

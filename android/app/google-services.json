@@ -1,0 +1,39 @@
+{
+    "project_info": {
+      "project_number": "110141916202",
+      "project_id": "bearthly",
+      "storage_bucket": "bearthly.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:110141916202:android:8cfc2e197be4ebc3e1ef53",
+          "android_client_info": {
+            "package_name": "com.example.bearthly"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "110141916202-159a9kb0tki2jtc2saihidhoe1mu10j7.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyAU3Q3vg-kwA4QuRQquu5NpvsDA1Og0ZRI"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "110141916202-159a9kb0tki2jtc2saihidhoe1mu10j7.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
