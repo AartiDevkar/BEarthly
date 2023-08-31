@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:bearthly/intro_pages/onboarding_screens.dart';
 import 'package:bearthly/sign_up_pages/pages/signUp.dart';
 import 'package:bearthly/sign_up_pages/pages/welcomePage.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.teal, canvasColor: Colors.teal),
       debugShowCheckedModeBanner: false,
       // ignore: prefer_const_constructors
-      home: Signup(),
+      home: OnBoardingScreen(),
     );
   }
 }

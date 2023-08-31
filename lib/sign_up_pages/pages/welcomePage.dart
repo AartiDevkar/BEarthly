@@ -5,16 +5,25 @@ import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
 import 'package:bearthly/sign_up_pages/components/square_tile.dart';
 import 'package:flutter/material.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   WelcomePage({super.key});
 
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
   // text editing controllers
   final usernameController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  final double _sigmaX = 5; // from 0-10
-  final double _sigmaY = 5; // from 0-10
+  final double _sigmaX = 5;
+  // from 0-10
+  final double _sigmaY = 5;
+  // from 0-10
   final double _opacity = 0.2;
+
   final _formKey = GlobalKey<FormState>();
 
   // sign user in method
