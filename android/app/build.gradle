@@ -45,6 +45,9 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        targetSdkVersion 33
+        multiDexEnabled true //important
+
     }
 
     buildTypes {
