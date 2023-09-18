@@ -1,6 +1,5 @@
-import 'package:bearthly/carbonTrack/components/indicator.dart';
-
 import 'package:flutter/material.dart';
+import 'components/indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,6 +16,7 @@ class _nameState extends State<HomePage> {
     int selectedIndex = 0;
     return Scaffold(
       body: Container(
+        child: const Indicator(),
         height: 800,
         width: 450,
         decoration: const BoxDecoration(
@@ -24,13 +24,12 @@ class _nameState extends State<HomePage> {
             begin: Alignment.centerRight,
             end: Alignment.bottomRight,
             colors: [
-              Color.fromRGBO(149, 215, 188, 0.871),
-              Color.fromARGB(255, 167, 229, 207),
-              Color.fromARGB(255, 114, 198, 185)
+              Color.fromRGBO(100, 171, 225, 0.871),
+              Color.fromARGB(255, 142, 197, 229),
+              Color.fromARGB(255, 134, 173, 215)
             ],
           ),
         ),
-        child: const Indicator(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,

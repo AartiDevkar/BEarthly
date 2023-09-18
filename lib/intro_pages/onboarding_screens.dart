@@ -1,7 +1,7 @@
 import 'package:bearthly/intro_pages/intro_page2.dart';
 import 'package:bearthly/intro_pages/intro_page3.dart';
 
-import 'package:bearthly/sign_up_pages/pages/welcomePage.dart';
+import 'package:bearthly/sign_up_pages/pages/loginPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bearthly/intro_pages/intro_page1.dart';
@@ -63,7 +63,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return WelcomePage();
+                                  return LoginPage();
                                 },
                               ),
                             );

@@ -1,28 +1,48 @@
 import 'dart:ui';
 
+import 'package:bearthly/homePage/home_page.dart';
 import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
-import 'package:bearthly/sign_up_pages/pages/loginPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
   Signup({super.key});
 
+  @override
+  State<Signup> createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
   // text editing controllers
   final usernameController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  final double _sigmaX = 5; // from 0-10
-  final double _sigmaY = 5; // from 0-10
+  final double _sigmaX = 5;
+  // from 0-10
+  final double _sigmaY = 5;
+  // from 0-10
   final double _opacity = 0.2;
-  final _formKey = GlobalKey<FormState>();
 
-  // sign user in method
-  void signUserIn() {
-    if (_formKey.currentState!.validate()) {
-      print('valid');
-    } else {
-      print('not valid');
+  User? _user;
+  final _formKey = GlobalKey<FormState>();
+  void signUpUser() async {
+    try {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      final UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+              email: usernameController.text,
+              password: passwordController.text);
+      // Store the authenticated user in the _user variable
+      _user = userCredential.user;
+
+      if (_user != null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
+      }
+    } catch (e) {
+      print("Sign Up  error:$e");
     }
   }
 
@@ -105,15 +125,15 @@ class Signup extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 10),
                                 MyTextField(
-                                  controller: usernameController,
-                                  hintText: 'Contact',
+                                  controller: passwordController,
+                                  hintText: 'Password',
                                   obscureText: false,
                                 ),
 
                                 const SizedBox(height: 10),
                                 MyPasswordTextField(
                                   controller: passwordController,
-                                  hintText: 'Password',
+                                  hintText: ' Confirm Password',
                                   obscureText: true,
                                 ),
                                 const SizedBox(height: 25),
@@ -133,13 +153,7 @@ class Signup extends StatelessWidget {
                                     const SizedBox(height: 10),
                                     MyButtonAgree(
                                       text: "Sign Up",
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginPage()));
-                                      },
+                                      onTap: () => signUpUser(),
                                     ),
                                   ],
                                 ),

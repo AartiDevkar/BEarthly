@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
    
   smooth_page_indicator: ^1.0.0
+  firebase_core: ^2.15.1
+
+  percent_indicator: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -48,7 +51,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  firebase_core: ^2.15.1
   firebase_auth: ^4.9.0
 
 # For information on the generic Dart part of this file, see the

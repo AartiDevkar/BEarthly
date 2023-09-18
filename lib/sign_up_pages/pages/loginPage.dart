@@ -1,28 +1,55 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:ui';
-
+import 'package:bearthly/homePage/home_page.dart';
 import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
+import 'package:bearthly/sign_up_pages/components/square_tile.dart';
+import 'package:bearthly/sign_up_pages/pages/signUp.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   // text editing controllers
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  final double _sigmaX = 5; // from 0-10
-  final double _sigmaY = 5; // from 0-10
+  User? _user;
+
+  final double _sigmaX = 5;
+  // from 0-10
+  final double _sigmaY = 4;
+  // from 0-10
   final double _opacity = 0.2;
+
   final _formKey = GlobalKey<FormState>();
 
   // sign user in method
-  void signUserIn() {
-    if (_formKey.currentState!.validate()) {
-      print('valid');
-    } else {
-      print('not valid');
+  void signUserIn() async {
+    try {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      final UserCredential userCredential =
+          await _auth.signInWithEmailAndPassword(
+              email: usernameController.text,
+              password: passwordController.text);
+      // Store the authenticated user in the _user variable
+      _user = userCredential.user;
+
+      if (_user != null) {
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("login error:$e");
+      }
     }
   }
 
@@ -45,34 +72,35 @@ class LoginPage extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   IconButton(
                     icon: const Icon(Icons.arrow_back_ios),
                     color: Colors.white,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed: () {},
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.26),
-                  const Text("Log in",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold)),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 90),
+                    child: const Text("BEarthly",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   ClipRect(
                     child: BackdropFilter(
                       filter:
                           ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 0, 0, 1)
+                            color: const Color.fromRGBO(0, 0, 0, 1)
                                 .withOpacity(_opacity),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(30))),
                         width: MediaQuery.of(context).size.width * 0.9,
-                        height: MediaQuery.of(context).size.height * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.63,
                         child: Form(
                           key: _formKey,
                           child: Center(
@@ -80,58 +108,28 @@ class LoginPage extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 25.0),
-                                  child: Row(children: [
-                                    const CircleAvatar(
-                                      radius: 30,
-                                      backgroundImage: NetworkImage(
-                                          'https://anmg-production.anmg.xyz/yaza-co-za_sfja9J2vLAtVaGdUPdH5y7gA'),
-                                    ),
-                                    SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.05),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      // ignore: prefer_const_literals_to_create_immutables
-                                      children: [
-                                        Text("Jane Dow",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold)),
-                                        const SizedBox(height: 5),
-                                        Text("jane.doe@gmail.com",
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18))
-                                      ],
-                                    )
-                                  ]),
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.03),
+                                // username textfield
                                 MyTextField(
-                                  controller: passwordController,
-                                  hintText: 'Password',
-                                  obscureText: true,
+                                  controller: usernameController,
+                                  hintText: 'Email',
+                                  obscureText: false,
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.03),
-                                MyButtonAgree(
-                                  text: "Continue",
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => LoginPage()));
-                                  },
+
+                                const SizedBox(height: 5),
+
+                                // username textfield
+                                MyPasswordTextField(
+                                    controller: passwordController,
+                                    hintText: 'Password',
+                                    obscureText: false),
+
+                                const SizedBox(height: 10),
+
+                                // login  button
+                                MyButton(
+                                  onTap: () => signUserIn(),
                                 ),
+
                                 const SizedBox(height: 30),
                                 const Text('Forgot Password?',
                                     style: TextStyle(
@@ -139,7 +137,126 @@ class LoginPage extends StatelessWidget {
                                             Color.fromARGB(255, 71, 233, 133),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),
-                                    textAlign: TextAlign.start),
+                                    textAlign: TextAlign.justify),
+
+                                // or continue with
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Divider(
+                                        thickness: 0.5,
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: Text(
+                                        'Or',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Divider(
+                                        thickness: 0.5,
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                const SizedBox(height: 5),
+
+                                // google
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      // facebook button
+
+                                      SizedBox(height: 5),
+
+                                      // google button
+                                      SquareTile(
+                                        imagePath: 'assets/images/google.png',
+                                        title: "Continue with Google",
+                                      ),
+
+                                      SizedBox(height: 5),
+                                    ],
+                                  ),
+                                ),
+
+                                const SizedBox(height: 5),
+
+                                // not a member? register now
+                                GestureDetector(
+                                  onTap: () {
+                                    // Navigate to the sign-up page when "Sign Up" text is clicked
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Signup(), // Replace SignUpPage with the actual name of your sign-up page class
+                                      ),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Don\'t have an account?',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                            SizedBox(width: 4),
+                                            Text(
+                                              'Sign Up',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 71, 233, 133),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.01,
+                                        ),
+                                        const Text(
+                                          'Forgot Password?',
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 71, 233, 133),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
