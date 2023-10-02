@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'components/Survey.dart';
+// ignore: unused_import
 import 'components/indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,26 +12,63 @@ class HomePage extends StatefulWidget {
 
 class _nameState extends State<HomePage> {
   int currentIndex = 0;
+
+  // Function to open the survey form dialog
+  void _openSurveyForm() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Survey Form'),
+          // Add your survey form widget here
+          content: Survey(),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    int selectedIndex = 0;
     return Scaffold(
-      body: Container(
-        child: const Indicator(),
-        height: 800,
-        width: 450,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.centerRight,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.fromRGBO(100, 171, 225, 0.871),
-              Color.fromARGB(255, 142, 197, 229),
-              Color.fromARGB(255, 134, 173, 215)
-            ],
+      body: Stack(
+        children: [
+          Container(
+            height: 800,
+            width: 450,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerRight,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(100, 171, 225, 0.871),
+                  Color.fromARGB(255, 142, 197, 229),
+                  Color.fromARGB(255, 134, 173, 215),
+                ],
+              ),
+            ),
           ),
-        ),
+
+          // Add the round button above the indicator
+          Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
+              onPressed: _openSurveyForm,
+              child: Text('Open Survey'),
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(35), // Adjust padding as needed
+              ),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -50,9 +89,9 @@ class _nameState extends State<HomePage> {
             label: 'Recycle',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.people_alt_rounded),
-              label: 'connect',
-              tooltip: 'Connect'),
+            icon: Icon(Icons.people_alt_rounded),
+            label: 'Connect',
+          ),
         ],
       ),
     );

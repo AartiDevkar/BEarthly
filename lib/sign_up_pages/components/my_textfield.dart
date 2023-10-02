@@ -4,7 +4,7 @@ class MyTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
-
+  // Add validator property
   const MyTextField({
     Key? key,
     required this.controller,

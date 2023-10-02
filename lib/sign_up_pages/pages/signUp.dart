@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bearthly/homePage/home_page.dart';
+import 'package:bearthly/CarbonTrack/home_page.dart';
 import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,9 +15,10 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   // text editing controllers
-  final usernameController = TextEditingController();
-
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   final double _sigmaX = 5;
   // from 0-10
@@ -27,22 +28,40 @@ class _SignupState extends State<Signup> {
 
   User? _user;
   final _formKey = GlobalKey<FormState>();
-  void signUpUser() async {
-    try {
-      final FirebaseAuth _auth = FirebaseAuth.instance;
-      final UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-              email: usernameController.text,
-              password: passwordController.text);
-      // Store the authenticated user in the _user variable
-      _user = userCredential.user;
 
-      if (_user != null) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+  void signUpUser() async {
+    if (_formKey.currentState!.validate()) {
+      // Validation passed
+      try {
+        final FirebaseAuth _auth = FirebaseAuth.instance;
+        final UserCredential userCredential =
+            await _auth.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // Store the authenticated user in the _user variable
+        _user = userCredential.user;
+
+        if (_user != null) {
+          // Now, you can store the user's name separately
+          // ignore: unused_local_variable
+          String fullName = nameController.text;
+
+          // Perform any additional actions with the user's name here
+
+          // Navigate to the home page
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+          );
+        }
+      } catch (e) {
+        print("Sign Up error: $e");
       }
-    } catch (e) {
-      print("Sign Up  error:$e");
     }
   }
 
@@ -112,14 +131,14 @@ class _SignupState extends State<Signup> {
                                 const SizedBox(height: 10),
 
                                 MyTextField(
-                                  controller: usernameController,
+                                  controller: nameController,
                                   hintText: 'Enter Your Full Name',
                                   obscureText: false,
                                 ),
                                 const SizedBox(height: 10),
 
                                 MyTextField(
-                                  controller: usernameController,
+                                  controller: emailController,
                                   hintText: 'Email',
                                   obscureText: false,
                                 ),
@@ -127,12 +146,12 @@ class _SignupState extends State<Signup> {
                                 MyTextField(
                                   controller: passwordController,
                                   hintText: 'Password',
-                                  obscureText: false,
+                                  obscureText: true,
                                 ),
 
                                 const SizedBox(height: 10),
                                 MyPasswordTextField(
-                                  controller: passwordController,
+                                  controller: confirmPasswordController,
                                   hintText: ' Confirm Password',
                                   obscureText: true,
                                 ),
