@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           canvasColor: Color.fromARGB(255, 191, 228, 228)),
       debugShowCheckedModeBanner: false,
       // ignore: prefer_const_constructors
-      home: OnBoardingScreen(),
+      home: HomePage(),
     );
   }
 }

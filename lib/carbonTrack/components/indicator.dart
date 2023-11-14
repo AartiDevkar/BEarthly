@@ -12,17 +12,19 @@ class Indicator extends StatefulWidget {
 class _IndicatorState extends State<Indicator> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(),
-          child: SizedBox(
-            child: CircularPercentIndicator(
-              radius: 130,
-              lineWidth: 20,
-              progressColor: Colors.teal,
-              percent: 0.0,
-            ),
-          )),
+    return Container(
+      child: Scaffold(
+        body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(),
+            child: SizedBox(
+              child: CircularPercentIndicator(
+                radius: 130,
+                lineWidth: 20,
+                progressColor: Colors.teal,
+                percent: 0.0,
+              ),
+            )),
+      ),
     );
   }
 }

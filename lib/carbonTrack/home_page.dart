@@ -54,6 +54,10 @@ class _nameState extends State<HomePage> {
                 ],
               ),
             ),
+            child: const Align(
+              alignment: Alignment(15, 15),
+              child: Indicator(),
+            ),
           ),
 
           // Add the round button above the indicator
@@ -64,7 +68,7 @@ class _nameState extends State<HomePage> {
               child: Text('Open Survey'),
               style: ElevatedButton.styleFrom(
                 shape: CircleBorder(),
-                padding: EdgeInsets.all(35), // Adjust padding as needed
+                padding: EdgeInsets.all(45), // Adjust padding as needed
               ),
             ),
           ),

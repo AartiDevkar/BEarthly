@@ -53,6 +53,26 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<void> resetPassword() async {
+    final email = usernameController.text;
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      // Show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Password reset email sent. Check your inbox.'),
+        ),
+      );
+    } catch (e) {
+      // Show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Password reset failed: $e'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,13 +151,21 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
 
                                 const SizedBox(height: 30),
-                                const Text('Forgot Password?',
+                                // Add this GestureDetector for "Forgot Password?"
+                                GestureDetector(
+                                  onTap: () {
+                                    resetPassword();
+                                  },
+                                  child: const Text(
+                                    'Forgot Password?',
                                     style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 71, 233, 133),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                    textAlign: TextAlign.justify),
+                                      color: Color.fromARGB(255, 71, 233, 133),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ),
 
                                 // or continue with
                                 Row(
@@ -242,16 +270,6 @@ class _LoginPageState extends State<LoginPage> {
                                                   .size
                                                   .height *
                                               0.01,
-                                        ),
-                                        const Text(
-                                          'Forgot Password?',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 71, 233, 133),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          ),
-                                          textAlign: TextAlign.start,
                                         ),
                                       ],
                                     ),
