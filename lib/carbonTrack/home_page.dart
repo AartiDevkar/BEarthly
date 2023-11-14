@@ -41,24 +41,24 @@ class _nameState extends State<HomePage> {
       body: Stack(
         children: [
           Container(
-            height: 800,
-            width: 450,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(100, 171, 225, 0.871),
-                  Color.fromARGB(255, 142, 197, 229),
-                  Color.fromARGB(255, 134, 173, 215),
-                ],
+              height: 800,
+              width: 450,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerRight,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color.fromRGBO(100, 171, 225, 0.871),
+                    Color.fromARGB(255, 142, 197, 229),
+                    Color.fromARGB(255, 134, 173, 215),
+                  ],
+                ),
               ),
-            ),
-            child: const Align(
-              alignment: Alignment(15, 15),
-              child: Indicator(),
-            ),
-          ),
+              child: Container(
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.all(60),
+                child: Indicator(),
+              )),
 
           // Add the round button above the indicator
           Align(
