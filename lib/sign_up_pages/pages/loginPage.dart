@@ -1,5 +1,7 @@
 import 'dart:ui';
+
 import 'package:bearthly/carbonTrack/home_page.dart';
+
 import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
 import 'package:bearthly/sign_up_pages/components/square_tile.dart';
@@ -42,9 +44,8 @@ class _LoginPageState extends State<LoginPage> {
       _user = userCredential.user;
 
       if (_user != null) {
-        // ignore: use_build_context_synchronously
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     } catch (e) {
       if (kDebugMode) {
@@ -75,30 +76,33 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height,
+          height: screenHeight,
           child: Stack(
             alignment: Alignment.center,
             children: [
               Image.asset(
-                'assets/images/homeimage.webp',
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+                'assets/images/bg1.png',
+                width: screenWidth,
+                height: screenHeight,
                 fit: BoxFit.cover,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                  SizedBox(height: screenHeight * 0.01),
                   IconButton(
                     icon: const Icon(Icons.arrow_back_ios),
                     color: Colors.white,
                     onPressed: () {},
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                  SizedBox(height: screenHeight * 0.2),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 90),
                     child: const Text("BEarthly",
@@ -107,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 40,
                             fontWeight: FontWeight.bold)),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  SizedBox(height: screenHeight * 0.03),
                   ClipRect(
                     child: BackdropFilter(
                       filter:
@@ -119,8 +123,8 @@ class _LoginPageState extends State<LoginPage> {
                                 .withOpacity(_opacity),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(30))),
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: MediaQuery.of(context).size.height * 0.63,
+                        width: screenWidth * 0.9,
+                        height: screenHeight * 0.63,
                         child: Form(
                           key: _formKey,
                           child: Center(
@@ -139,9 +143,10 @@ class _LoginPageState extends State<LoginPage> {
 
                                 // username textfield
                                 MyPasswordTextField(
-                                    controller: passwordController,
-                                    hintText: 'Password',
-                                    obscureText: false),
+                                  controller: passwordController,
+                                  hintText: 'Password',
+                                  obscureText: false,
+                                ),
 
                                 const SizedBox(height: 10),
 
@@ -266,10 +271,7 @@ class _LoginPageState extends State<LoginPage> {
                                           ],
                                         ),
                                         SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.01,
+                                          height: screenHeight * 0.01,
                                         ),
                                       ],
                                     ),

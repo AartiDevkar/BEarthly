@@ -40,7 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
             alignment: Alignment.center,
             children: [
               Image.asset(
-                'assets/images/homeimage.webp',
+                'assets/images/bg1.png',
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 fit: BoxFit.cover,
