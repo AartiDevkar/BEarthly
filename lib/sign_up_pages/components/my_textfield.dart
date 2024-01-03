@@ -4,7 +4,7 @@ class MyTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
-  // Add validator property
+
   const MyTextField({
     Key? key,
     required this.controller,
@@ -20,6 +20,8 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode:
+          AutovalidateMode.onUserInteraction, // Auto-validate on interaction
       validator: (val) => val!.isEmpty ? 'Enter your email' : null,
       controller: widget.controller,
       obscureText: widget.obscureText,
@@ -30,6 +32,7 @@ class _MyTextFieldState extends State<MyTextField> {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey.shade400),
         ),
+        errorStyle: TextStyle(color: Colors.red), // Add red color to error text
         fillColor: Colors.grey.shade200,
         filled: true,
         hintText: widget.hintText,
@@ -61,6 +64,8 @@ class _MyPasswordTextFieldState extends State<MyPasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode:
+          AutovalidateMode.onUserInteraction, // Auto-validate on interaction
       validator: (val) => val!.isEmpty ? 'Enter your password' : null,
       controller: widget.controller,
       obscureText: !_isPasswordVisible,
@@ -81,6 +86,7 @@ class _MyPasswordTextFieldState extends State<MyPasswordTextField> {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey.shade400),
         ),
+        errorStyle: TextStyle(color: Colors.red), // Add red color to error text
         fillColor: Colors.grey.shade200,
         filled: true,
         hintText: widget.hintText,

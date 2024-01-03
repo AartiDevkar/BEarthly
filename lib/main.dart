@@ -1,6 +1,9 @@
 import 'package:bearthly/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
+
+// ignore: unused_import
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
         canvasColor: Color.fromARGB(255, 191, 228, 228),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: onboardingShown ? '/home' : '/onboarding',
+      initialRoute: '/',
       onGenerateRoute: AppRouter.generateRoute,
     );
   }

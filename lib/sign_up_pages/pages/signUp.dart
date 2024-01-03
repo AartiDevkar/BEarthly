@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bearthly/CarbonTrack/home_page.dart';
+import 'package:bearthly/carbonTrack/home_page.dart';
 import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,9 +54,7 @@ class _SignupState extends State<Signup> {
           // ignore: use_build_context_synchronously
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
+            MaterialPageRoute(builder: (context) => const HomePage()),
           );
         }
       } catch (e) {

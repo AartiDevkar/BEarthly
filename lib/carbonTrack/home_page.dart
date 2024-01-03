@@ -1,9 +1,9 @@
+import 'package:bearthly/carbonTrack/components/survey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bearthly/carbonTrack/components/survey.dart';
 import 'components/indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -97,7 +97,10 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               alignment: Alignment.topCenter,
               padding: EdgeInsets.all(60),
-              child: Indicator(percent: calculatedPercent),
+              child: Indicator(
+                percent: calculatedPercent,
+                co2eKg: 0,
+              ),
             ),
           ),
 
@@ -108,6 +111,8 @@ class _HomePageState extends State<HomePage> {
               onPressed: _openSurveyForm,
               child: Text('Open Survey'),
               style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 191, 228, 228),
+
                 shape: OvalBorder(),
 
                 padding: EdgeInsets.all(35), // Adjust padding as needed
@@ -123,7 +128,7 @@ class _HomePageState extends State<HomePage> {
           // Navigate to the corresponding page when an icon is tapped
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/ct_page');
+              Navigator.pushNamed(context, '/');
               break;
             case 1:
               Navigator.pushNamed(context, '/reduce');
@@ -145,11 +150,11 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.arrow_downward),
-            label: 'Reduce',
+            label: 'Track',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.recycling),
-            label: 'Recycle',
+            label: 'Reduce',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people_alt_rounded),
