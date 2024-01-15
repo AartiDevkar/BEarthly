@@ -1,3 +1,4 @@
+import 'package:bearthly/carbonTrack/components/co2_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,22 +14,43 @@ class Survey extends StatefulWidget {
 class _SurveyState extends State<Survey> {
   PageController _pageController = PageController();
   int _currentPageIndex = 0;
-  // Define variables to store user responses
-  List<int?> questionResponses = List<int?>.filled(
-    8,
+  List<String?> questionResponses = List<String?>.filled(
+    10,
     null,
     growable: false,
   );
+  late final CarbonCalculator _carbonCalculator;
 
-  // Sample questions with options
   final List<Map<String, dynamic>> questions = [
     {
       'question': 'How do you primarily commute to work/school?',
       'options': ['Public Transport', 'Car/bike', 'Cycle/Walking'],
     },
     {
+      'question': 'How many times do you take flights per year?',
+      'options': ['None', '1-2 times', '3-5 times', 'More than 5 times'],
+    },
+    {
+      'question': 'What is your preferred mode of shopping for everyday items?',
+      'options': [
+        'In-store shopping',
+        'Online shopping with fast shipping',
+        'Online shopping with eco-friendly shipping options',
+        'I rarely shop for everyday items'
+      ],
+    },
+    {
       'question': 'What type of energy sources power your home?',
       'options': ['Solar', 'Wind', 'Other'],
+    },
+    {
+      'question': 'Do you use LED bulbs in your home?',
+      'options': ['Yes', 'No'],
+    },
+    {
+      'question':
+          'How often do you use energy-intensive appliances such as air conditioners, heaters, or large electronic devices?',
+      'options': ['Frequently', 'Occasionally', 'Rarely', 'Never'],
     },
     {
       'question': 'What is your primary source of protein?',
@@ -40,14 +62,6 @@ class _SurveyState extends State<Survey> {
       ],
     },
     {
-      'question': 'How often do you recycle paper, plastic, and glass?',
-      'options': ['Always', 'Often', 'Rarely', 'Never'],
-    },
-    {
-      'question': 'Do you use LED bulbs in your home?',
-      'options': ['Yes', 'No'],
-    },
-    {
       'question': 'How many gallons of water do you use per day on average?',
       'options': [
         'Less than 50 gallons',
@@ -57,8 +71,8 @@ class _SurveyState extends State<Survey> {
       ],
     },
     {
-      'question': 'How many times do you take flights per year?',
-      'options': ['None', '1-2 times', '3-5 times', 'More than 5 times'],
+      'question': 'How often do you recycle paper, plastic, and glass?',
+      'options': ['Always', 'Often', 'Rarely', 'Never'],
     },
     {
       'question': 'How do you dispose of electronic waste (e-waste)?',
@@ -74,9 +88,15 @@ class _SurveyState extends State<Survey> {
       FirebaseFirestore.instance.collection('Survey');
 
   @override
+  void initState() {
+    super.initState();
+    _carbonCalculator = CarbonCalculator(context as BuildContext);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
+      height: 600,
       width: 800,
       child: Scaffold(
         appBar: AppBar(
@@ -110,7 +130,7 @@ class _SurveyState extends State<Survey> {
             : FloatingActionButton(
                 onPressed: () async {
                   double totalCarbonFootprint =
-                      calculateCarbonFootprint(questionResponses);
+                      _carbonCalculator.calculateFootprints(questionResponses);
                   await storeSurveyData(
                       questionResponses, totalCarbonFootprint);
                   double maxCarbonFootprint = 100.0;
@@ -149,11 +169,11 @@ class _SurveyState extends State<Survey> {
             ),
             SizedBox(height: 16.0),
             for (int i = 0; i < questions[index]['options']!.length; i++)
-              RadioListTile<int?>(
+              RadioListTile<String?>(
                 title: Text(questions[index]['options']![i]),
-                value: i + 1,
+                value: (i + 1).toString(),
                 groupValue: questionResponses[index],
-                onChanged: (int? value) {
+                onChanged: (String? value) {
                   setState(() {
                     questionResponses[index] = value;
                   });
@@ -165,32 +185,20 @@ class _SurveyState extends State<Survey> {
     );
   }
 
-  double calculateCarbonFootprint(List<int?> questionResponses) {
-    List<double> emissionFactors = [5.0, 3.0, 4.0, 2.0, 1.0, 6.0, 10.0, 8.0];
-    double totalCarbonFootprint = 0.0;
-
-    for (int i = 0; i < questionResponses.length; i++) {
-      if (questionResponses[i] != null) {
-        totalCarbonFootprint +=
-            emissionFactors[i] * (questionResponses[i]! - 1);
-      }
-    }
-
-    return totalCarbonFootprint;
-  }
-
   Future<void> storeSurveyData(
-      List<int?> questionResponses, double carbonFootprint) async {
+      List<String?> questionResponses, double carbonFootprint) async {
     try {
       Map<String, dynamic> surveyData = {
-        'question1': questionResponses[0],
-        'question2': questionResponses[1],
-        'question3': questionResponses[2],
-        'question4': questionResponses[3],
-        'question5': questionResponses[4],
-        'question6': questionResponses[5],
-        'question7': questionResponses[6],
-        'question8': questionResponses[7],
+        'transport': getOptionText(0, questionResponses),
+        'flights_year': getOptionText(1, questionResponses),
+        'shopping_mode': getOptionText(2, questionResponses),
+        'energy_source_home': getOptionText(3, questionResponses),
+        'LED_bulbs': getOptionText(4, questionResponses),
+        'energy_intensive_appliances': getOptionText(5, questionResponses),
+        'protein_source': getOptionText(6, questionResponses),
+        'water_usage': getOptionText(7, questionResponses),
+        'recycle_waste': getOptionText(8, questionResponses),
+        'E-waste_recycle': getOptionText(9, questionResponses),
         'carbonFootprint': carbonFootprint,
         'timestamp': FieldValue.serverTimestamp(),
       };
@@ -201,5 +209,13 @@ class _SurveyState extends State<Survey> {
     } catch (e) {
       print('Error storing survey data: $e');
     }
+  }
+
+  String? getOptionText(int questionIndex, List<String?> questionResponses) {
+    String? responseIndex = questionResponses[questionIndex];
+    if (responseIndex != null && responseIndex.isNotEmpty) {
+      return questions[questionIndex]['options']![int.parse(responseIndex) - 1];
+    }
+    return null;
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:bearthly/carbonTrack/home_page.dart';
 import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';

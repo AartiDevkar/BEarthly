@@ -84,16 +84,19 @@ class _HomePageState extends State<HomePage> {
             height: 850,
             width: 450,
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(8, 128, 90, 0.833),
-                  Color.fromARGB(255, 41, 126, 88),
-                  Color.fromARGB(255, 23, 95, 72),
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [
+                  0.2,
+                  0.5,
+                  0.8,
                 ],
-              ),
-            ),
+                    colors: [
+                  Color.fromARGB(255, 20, 137, 135),
+                  Color.fromARGB(255, 113, 189, 173),
+                  Color.fromARGB(255, 105, 192, 178),
+                ])),
             child: Container(
               alignment: Alignment.topCenter,
               padding: EdgeInsets.all(60),
@@ -113,9 +116,10 @@ class _HomePageState extends State<HomePage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 191, 228, 228),
 
-                shape: OvalBorder(),
+                shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(25)),
 
-                padding: EdgeInsets.all(35), // Adjust padding as needed
+                padding: EdgeInsets.all(20), // Adjust padding as needed
               ),
             ),
           ),

@@ -14,13 +14,13 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/onboarding':
-        return MaterialPageRoute(builder: (_) => OnBoardingScreen());
+        return MaterialPageRoute(builder: (_) => const OnBoardingScreen());
       case '/login':
         return MaterialPageRoute(builder: (_) => LoginPage());
       case '/signup':
         return MaterialPageRoute(builder: (_) => Signup());
-      case '/':
-        return MaterialPageRoute(builder: (_) => const HomePage());
+      case '/home':
+        return MaterialPageRoute(builder: (_) => HomePage());
 
       case '/reduce':
         return MaterialPageRoute(builder: (_) => Reduce());

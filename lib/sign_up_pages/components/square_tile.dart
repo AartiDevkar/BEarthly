@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 class SquareTile extends StatelessWidget {
   final String imagePath;
   final String title;
-  final VoidCallback onPressed;
+  final VoidCallback onPressed; // Change the type to VoidCallback
+
   const SquareTile({
     Key? key,
     required this.imagePath,
     required this.title,
-    required this.onPressed, // Add this line
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -21,7 +22,7 @@ class SquareTile extends StatelessWidget {
         color: Colors.grey[200],
       ),
       child: ElevatedButton(
-        onPressed: onPressed, // Use the provided onPressed callback
+        onPressed: onPressed,
         child: Row(
           children: [
             Image.asset(
@@ -29,9 +30,10 @@ class SquareTile extends StatelessWidget {
               height: 40,
             ),
             const SizedBox(width: 20),
-            Text(title,
-                style:
-                    const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),
