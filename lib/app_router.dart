@@ -19,7 +19,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginPage());
       case '/signup':
         return MaterialPageRoute(builder: (_) => Signup());
-      case '/home':
+      case '/':
         return MaterialPageRoute(builder: (_) => HomePage());
 
       case '/reduce':
@@ -27,7 +27,7 @@ class AppRouter {
       case '/recycle':
         return MaterialPageRoute(builder: (_) => Recycle());
       case '/connect':
-        return MaterialPageRoute(builder: (_) => Connect());
+        return MaterialPageRoute(builder: (_) => const Connect());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

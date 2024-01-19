@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         canvasColor: Color.fromARGB(255, 191, 228, 228),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
+      initialRoute: '/',
       onGenerateRoute: AppRouter.generateRoute,
     );
   }

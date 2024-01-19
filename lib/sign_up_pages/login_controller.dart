@@ -29,9 +29,10 @@ class LoginController {
         _user = userCredential.user;
 
         if (_user != null) {
+          // ignore: use_build_context_synchronously
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(builder: (context) => HomePage()),
           );
         } else {
           // Handle the case where _user is unexpectedly null

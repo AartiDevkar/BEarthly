@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bearthly/recycle_pages/components/bar_graph/bar_graph.dart';
+import 'package:bearthly/recycle_pages/components/pie_chart_components/piechart.dart';
 
 class Recycle extends StatefulWidget {
   const Recycle({super.key});
@@ -9,6 +11,7 @@ class Recycle extends StatefulWidget {
 
 class _RecycleState extends State<Recycle> {
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +19,18 @@ class _RecycleState extends State<Recycle> {
         title: Text('Recycle'),
         backgroundColor: Color.fromARGB(255, 191, 228, 228),
       ),
-      backgroundColor: Color.fromRGBO(8, 128, 90, 0.833),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              BarChartSample2(),
+              SizedBox(height: 20), // Add some space between charts
+              Piechart(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

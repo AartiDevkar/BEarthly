@@ -1,0 +1,113 @@
+[33mcommit 071cd31c2ad9a3a945de0210661a3086cbf7c747[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31maarti2/main[m[33m)[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Mon Jan 15 09:51:31 2024 +0530
+
+    commit
+
+[33mcommit 549e59629e6f559d0391e40f9eef596e6c77fe38[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Thu Jan 4 01:19:09 2024 +0530
+
+    google sign in added
+
+[33mcommit 486a80d528a5b5816ad2aa3adadd9965766a14d0[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Tue Dec 26 22:30:55 2023 +0530
+
+    basic design of  reduce and conect pages
+
+[33mcommit 71fcf00ba48b919f47c91a26f73dff4e9ef97958[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Tue Nov 14 23:49:04 2023 +0530
+
+    made indicator bar
+
+[33mcommit 8f5ed43a6c7ed1a2b43104e1c323ad1584c4fc34[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Tue Nov 14 11:30:09 2023 +0530
+
+    new1
+
+[33mcommit 6165dce7014d523f75dc17c6100e88fd1ac9e3ea[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Mon Oct 2 18:44:29 2023 +0530
+
+    made some changes in survey form
+
+[33mcommit d5f9821890885ca40c5025b28641c439ded4ef0a[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Mon Sep 18 16:57:37 2023 +0530
+
+    added Survey form and indicator
+
+[33mcommit 74a21250588153b57a3f35281d301a694e4521d2[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Fri Sep 1 13:22:09 2023 +0530
+
+    modified build.gradle files to solve error
+
+[33mcommit 59d095d3a8466fb387ef1e0d8214be731dab1735[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Fri Sep 1 11:54:14 2023 +0530
+
+    reinstalled vs code for solving builscript error
+
+[33mcommit 151ddcb06a10b47b66c137ced8471fdaedfcf33c[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Fri Sep 1 00:14:28 2023 +0530
+
+    app is okay
+
+[33mcommit b34b5a7d1e8476c55ca1f741361d098c2d065487[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Tue Aug 15 19:54:05 2023 +0530
+
+    added textfields in signUp page
+
+[33mcommit 8e88faa9f4cd689639a690ff222c83bf41710a8a[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Tue Aug 15 19:38:27 2023 +0530
+
+    built successfull but 2 erros in build gradle file
+
+[33mcommit a7e56bfacfef41fdc40587d6512794ecd0569e80[m[33m ([m[1;31mEarthly/main[m[33m)[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Tue Aug 15 17:51:47 2023 +0530
+
+    in
+
+[33mcommit eda80ce72ec3c0ca37d663f3d6d9a7de020b269c[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Tue Aug 15 17:51:37 2023 +0530
+
+    changes
+
+[33mcommit 99e2c1eb62b800c9a3c3693b0aa5d03d421f6893[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Tue Aug 15 16:48:28 2023 +0530
+
+    added setting.json file
+
+[33mcommit 4ebdf4deba59612edd835df26609e168e0de2559[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Sat Jul 15 11:24:46 2023 +0530
+
+    welcome page login page added
+
+[33mcommit 5827cbfb4147f7fe89c3e59de610092a81c78738[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Fri May 26 21:54:09 2023 +0530
+
+    appbar removed
+
+[33mcommit 7367c1045011cc6690bff84d247092a36e3abd52[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Fri May 26 21:48:35 2023 +0530
+
+    first commit
+
+[33mcommit 5c110f251fa2076ae05c60d6c6d02f44f986b90d[m[33m ([m[1;31mBEarthly/master[m[33m)[m
+Author: Aarti Devkar <aartideokar2003@gmail.com>
+Date:   Fri May 26 21:29:21 2023 +0530
+
+    initial commit
