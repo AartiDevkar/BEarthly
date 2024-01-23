@@ -16,7 +16,7 @@ class _RecycleState extends State<Recycle> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recycle'),
+        title: Text('Track'),
         backgroundColor: Color.fromARGB(255, 191, 228, 228),
       ),
       body: SingleChildScrollView(

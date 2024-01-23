@@ -1,5 +1,7 @@
+// Import necessary packages
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
 
 class Connect extends StatefulWidget {
   const Connect({Key? key}) : super(key: key);
@@ -21,6 +23,21 @@ class _ConnectState extends State<Connect> {
     }
   }
 
+  // Function to launch a URL
+  _launchURL(String url) async {
+    if (await canLaunch("")) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  // Function to share achievements on social media
+  _shareAchievement() {
+    // Implement the logic to share achievements on social media here
+    // You can use packages like share_plus to facilitate sharing
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,27 +52,26 @@ class _ConnectState extends State<Connect> {
         ],
       ),
       body: Container(
-        color: Color.fromRGBO(8, 128, 90, 0.833), // Dark theme background color
+        color: Color.fromRGBO(8, 128, 90, 0.833),
         padding: EdgeInsets.all(16),
         child: ListView(
           children: [
             PostItem(
               imageUrl:
-                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png', // Sample image URL
+                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png',
+              onConnect: () {
+                // Implement logic to display contact information on Connect click
+                print('Connect clicked - Display contact info');
+              },
+              onKnowMore: () {
+                // Launch the NGO's/org's website on Know More click
+                _launchURL('https://ngo-website.com');
+              },
+              onShare: () {
+                // Share the achievement on social media
+                _shareAchievement();
+              },
             ),
-            PostItem(
-              imageUrl:
-                  'https://www.seattleu.edu/media/newsroom/images/ClimateAction-1130x552.png', // Sample image URL
-            ),
-            PostItem(
-              imageUrl:
-                  'https://content.unops.org/photos/News-and-Stories/News/_image1920x900/header_2795x1310_dark.png', // Sample image URL
-            ),
-            PostItem(
-              imageUrl:
-                  'https://content.unops.org/photos/News-and-Stories/News/_image1920x900/header_2795x1310_dark.png', // Sample image URL
-            ),
-
             // Add more PostItem widgets with different image URLs as needed
           ],
         ),
@@ -66,28 +82,36 @@ class _ConnectState extends State<Connect> {
 
 class PostItem extends StatelessWidget {
   final String imageUrl;
+  final VoidCallback onConnect;
+  final VoidCallback onKnowMore;
+  final VoidCallback onShare;
 
-  const PostItem({Key? key, required this.imageUrl}) : super(key: key);
+  const PostItem({
+    Key? key,
+    required this.imageUrl,
+    required this.onConnect,
+    required this.onKnowMore,
+    required this.onShare,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.grey[900], // Dark color for post container
+        color: Colors.grey[900],
         borderRadius: BorderRadius.circular(12),
       ),
       padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Post image
           Container(
             height: 200,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               image: DecorationImage(
-                image: NetworkImage(imageUrl), // Set image URL
+                image: NetworkImage(imageUrl),
                 fit: BoxFit.cover,
               ),
             ),
@@ -96,12 +120,11 @@ class PostItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Popup menu button
               PopupMenuButton<String>(
                 iconColor: Color.fromARGB(255, 191, 228, 228),
                 color: Color.fromARGB(255, 191, 228, 228),
                 itemBuilder: (BuildContext context) {
-                  return ['Chat', 'Connect', 'Know More'].map((String choice) {
+                  return ['Connect', 'Know More'].map((String choice) {
                     return PopupMenuItem<String>(
                       value: choice,
                       child: Text(choice),
@@ -110,8 +133,16 @@ class PostItem extends StatelessWidget {
                 },
                 onSelected: (String choice) {
                   // Handle menu item selection
-                  print(choice);
+                  if (choice == 'Connect') {
+                    onConnect();
+                  } else if (choice == 'Know More') {
+                    onKnowMore();
+                  }
                 },
+              ),
+              IconButton(
+                icon: Icon(Icons.share),
+                onPressed: onShare,
               ),
             ],
           ),

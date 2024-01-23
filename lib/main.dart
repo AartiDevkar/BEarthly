@@ -1,9 +1,10 @@
-import 'package:bearthly/app_router.dart';
+import 'package:bearthly/carbonTrack/home_page.dart';
+import 'package:bearthly/connect_pages/Connect.dart';
+import 'package:bearthly/recycle_pages/recycle.dart';
+import 'package:bearthly/reduce_pages/reduce.dart';
+
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/material.dart';
-
-// ignore: unused_import
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -28,8 +29,14 @@ class MyApp extends StatelessWidget {
         canvasColor: Color.fromARGB(255, 191, 228, 228),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      onGenerateRoute: AppRouter.generateRoute,
+      // home: onboardingShown ? LoginPage() : const OnBoardingScreen(),
+      // onGenerateRoute: AppRouter.generateRoute,
+      home: HomePage(),
+      routes: {
+        '/reduce': (context) => const Reduce(),
+        '/recycle': (context) => const Recycle(),
+        '/connect': (context) => const Connect(),
+      },
     );
   }
 }

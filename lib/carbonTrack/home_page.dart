@@ -76,12 +76,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       //drawer: MyDrawer(),
       body: Stack(
         children: [
           Container(
-            height: 850,
+            height: screenHeight,
             width: 450,
             decoration: const BoxDecoration(
                 gradient: LinearGradient(

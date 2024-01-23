@@ -1,7 +1,7 @@
 import 'package:bearthly/intro_pages/intro_page2.dart';
 import 'package:bearthly/intro_pages/intro_page3.dart';
 
-import 'package:bearthly/sign_up_pages/pages/loginPage.dart';
+import 'package:bearthly/sign_up_pages/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bearthly/intro_pages/intro_page1.dart';
@@ -31,7 +31,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 onLastPage = (index == 2);
               });
             },
-            children: const [
+            children: [
               IntroPage1(),
               IntroPage2(),
               IntroPage3(),

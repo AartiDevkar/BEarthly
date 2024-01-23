@@ -1,5 +1,3 @@
-import 'package:bearthly/recycle_pages/components/bar_graph/resources_bar_graph.dart';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
