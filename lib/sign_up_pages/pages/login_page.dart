@@ -1,15 +1,17 @@
 import 'dart:ui';
-
+import 'package:bearthly/carbonTrack/home_page.dart';
 import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
 import 'package:bearthly/sign_up_pages/components/square_tile.dart';
 import 'package:bearthly/sign_up_pages/login_controller.dart';
-import 'package:bearthly/sign_up_pages/pages/signUp.dart';
+import 'package:bearthly/sign_up_pages/pages/sign_up.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -26,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
   // from 0-10
   final double _opacity = 0.2;
 
+  User? _user;
   final _formKey = GlobalKey<FormState>();
-
   // Create an instance of LoginController
   late final LoginController _loginController;
 
@@ -36,6 +38,69 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _loginController = LoginController(context);
+  }
+
+  void signUserIn() async {
+    try {
+      if (_formKey.currentState!.validate()) {
+        final BuildContext currentContext = context; // Capture context locally
+
+        final FirebaseAuth _auth = FirebaseAuth.instance;
+        final UserCredential userCredential =
+            await _auth.signInWithEmailAndPassword(
+          email: usernameController.text,
+          password: passwordController.text,
+        );
+
+        _user = userCredential.user;
+
+        if (_user != null) {
+          // Use the locally captured context
+          Navigator.pushReplacement(
+            currentContext,
+            MaterialPageRoute(builder: (currentContext) => const HomePage()),
+          );
+        } else {
+          print("User authentication failed. _user is null.");
+          ScaffoldMessenger.of(currentContext).showSnackBar(
+            SnackBar(
+              content: Text('User authentication failed. Please try again.'),
+            ),
+          );
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message ?? 'An error occurred.'),
+        ),
+      );
+    } catch (e, stackTrace) {
+      if (kDebugMode) {
+        print("Login error: $e");
+        print("StackTrace: $stackTrace");
+      }
+    }
+  }
+
+  Future<void> resetPassword() async {
+    final email = usernameController.text;
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      // Show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Password reset email sent. Check your inbox.'),
+        ),
+      );
+    } catch (e) {
+      // Show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Password reset failed: $e'),
+        ),
+      );
+    }
   }
 
   @override
@@ -48,11 +113,23 @@ class _LoginPageState extends State<LoginPage> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Image.asset(
-                'assets/images/homeimage.webp',
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                fit: BoxFit.cover,
+              Container(
+                height: 850,
+                width: 450,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        stops: [
+                      0.2,
+                      0.5,
+                      0.8,
+                    ],
+                        colors: [
+                      Color.fromARGB(255, 20, 137, 135),
+                      Color.fromARGB(255, 113, 189, 173),
+                      Color.fromARGB(255, 105, 192, 178),
+                    ])),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,14 +189,14 @@ class _LoginPageState extends State<LoginPage> {
 
                                 // login  button
                                 MyButton(
-                                  onTap: () => _loginController.signUserIn(),
+                                  onTap: () => signUserIn(),
                                 ),
 
                                 const SizedBox(height: 30),
                                 // Add this GestureDetector for "Forgot Password?"
                                 GestureDetector(
                                   onTap: () {
-                                    _loginController.resetPassword();
+                                    resetPassword();
                                   },
                                   child: const Text(
                                     'Forgot Password?',
@@ -180,7 +257,7 @@ class _LoginPageState extends State<LoginPage> {
                                             _loginController.handleGoogleSignIn,
                                       ),
 
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                     ],
                                   ),
                                 ),

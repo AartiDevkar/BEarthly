@@ -1,5 +1,5 @@
 import 'package:bearthly/carbonTrack/home_page.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,8 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class LoginController {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  User? _user;
-  final _formKey = GlobalKey<FormState>();
+  // User? _user;
+  // final _formKey = GlobalKey<FormState>();
 
   // Initialize the BuildContext variable
   late BuildContext context;
@@ -16,68 +16,68 @@ class LoginController {
   // Pass the context to the controller
   LoginController(this.context);
 
-  void signUserIn() async {
-    try {
-      if (_formKey.currentState!.validate()) {
-        final FirebaseAuth _auth = FirebaseAuth.instance;
-        final UserCredential userCredential =
-            await _auth.signInWithEmailAndPassword(
-          email: usernameController.text,
-          password: passwordController.text,
-        );
+  // void signUserIn() async {
+  //   try {
+  //     if (_formKey.currentState!.validate()) {
+  //       final BuildContext currentContext = context; // Capture context locally
 
-        _user = userCredential.user;
+  //       final FirebaseAuth _auth = FirebaseAuth.instance;
+  //       final UserCredential userCredential =
+  //           await _auth.signInWithEmailAndPassword(
+  //         email: usernameController.text,
+  //         password: passwordController.text,
+  //       );
 
-        if (_user != null) {
-          // ignore: use_build_context_synchronously
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-          );
-        } else {
-          // Handle the case where _user is unexpectedly null
-          throw Exception("User authentication failed. _user is null.");
-        }
-      }
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message ?? 'An error occurred.'),
-        ),
-      );
-    } catch (e, stackTrace) {
-      if (kDebugMode) {
-        print("Login error: $e");
-        print("StackTrace: $stackTrace");
-      }
-      // Handle other exceptions or errors here
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An unexpected error occurred. Please try again.'),
-        ),
-      );
-    }
-  }
+  //       _user = userCredential.user;
 
-  Future<void> resetPassword() async {
-    final email = usernameController.text;
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      // Show a success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Password reset email sent. Check your inbox.'),
-        ),
-      );
-    } catch (e) {
-      // Show an error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Password reset failed: $e'),
-        ),
-      );
-    }
-  }
+  //       if (_user != null) {
+  //         // Use the locally captured context
+  //         Navigator.pushReplacement(
+  //           currentContext,
+  //           MaterialPageRoute(builder: (currentContext) => const HomePage()),
+  //         );
+  //       } else {
+  //         print("User authentication failed. _user is null.");
+  //         ScaffoldMessenger.of(currentContext).showSnackBar(
+  //           SnackBar(
+  //             content: Text('User authentication failed. Please try again.'),
+  //           ),
+  //         );
+  //       }
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text(e.message ?? 'An error occurred.'),
+  //       ),
+  //     );
+  //   } catch (e, stackTrace) {
+  //     if (kDebugMode) {
+  //       print("Login error: $e");
+  //       print("StackTrace: $stackTrace");
+  //     }
+  //   }
+  // }
+
+  // Future<void> resetPassword() async {
+  //   final email = usernameController.text;
+  //   try {
+  //     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  //     // Show a success message
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('Password reset email sent. Check your inbox.'),
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     // Show an error message
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Password reset failed: $e'),
+  //       ),
+  //     );
+  //   }
+  // }
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   Future<void> handleGoogleSignIn() async {
