@@ -1,12 +1,12 @@
 // app_router.dart
 
 import 'package:bearthly/carbonTrack/home_page.dart';
-import 'package:bearthly/connect_pages/Connect.dart';
+
 import 'package:bearthly/intro_pages/onboarding_screens.dart';
-import 'package:bearthly/recycle_pages/recycle.dart';
-import 'package:bearthly/reduce_pages/reduce.dart';
-import 'package:bearthly/sign_up_pages/pages/loginPage.dart';
-import 'package:bearthly/sign_up_pages/pages/signUp.dart';
+
+import 'package:bearthly/sign_up_pages/pages/login_page.dart';
+
+import 'package:bearthly/sign_up_pages/pages/sign_up.dart';
 
 import 'package:flutter/material.dart';
 
@@ -20,14 +20,8 @@ class AppRouter {
       case '/signup':
         return MaterialPageRoute(builder: (_) => Signup());
       case '/':
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MaterialPageRoute(builder: (_) => const HomePage());
 
-      case '/reduce':
-        return MaterialPageRoute(builder: (_) => Reduce());
-      case '/recycle':
-        return MaterialPageRoute(builder: (_) => Recycle());
-      case '/connect':
-        return MaterialPageRoute(builder: (_) => const Connect());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
