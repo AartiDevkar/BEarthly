@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:bearthly/carbonTrack/home_page.dart';
 import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -44,13 +45,13 @@ class _SignupState extends State<Signup> {
 
         if (_user != null) {
           // Now, you can store the user's name separately
-          // ignore: unused_local_variable
-          String fullName = nameController.text;
+          String username = nameController.text;
 
           // Perform any additional actions with the user's name here
+          // Example code to create a user document in Firestore upon sign-up
+          createUserDocument(_user!.uid, _user!.email!, username);
 
           // Navigate to the home page
-          // ignore: use_build_context_synchronously
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const HomePage()),
@@ -60,6 +61,15 @@ class _SignupState extends State<Signup> {
         print("Sign Up error: $e");
       }
     }
+  }
+
+// Function to create a user document in Firestore
+  void createUserDocument(String uid, String email, String username) {
+    FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'email': email,
+      'username': username,
+      // Add other user-related fields as needed
+    });
   }
 
   @override
