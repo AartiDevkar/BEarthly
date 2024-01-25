@@ -17,6 +17,7 @@ class _ConnectState extends State<Connect> {
     try {
       await _auth.signOut();
       // Navigate to the login or onboarding screen
+      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     } catch (e) {
       print('Error signing out: $e');
