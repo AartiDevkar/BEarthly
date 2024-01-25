@@ -1,11 +1,14 @@
 import 'package:bearthly/carbonTrack/components/co2_calculator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Survey extends StatefulWidget {
   final void Function(double) onSurveyCompleted;
 
-  const Survey({Key? key, required this.onSurveyCompleted}) : super(key: key);
+  const Survey(
+      {Key? key, required this.onSurveyCompleted, required String userId})
+      : super(key: key);
 
   @override
   State<Survey> createState() => _SurveyState();
@@ -188,7 +191,8 @@ class _SurveyState extends State<Survey> {
   Future<void> storeSurveyData(
       List<String?> questionResponses, double carbonFootprint) async {
     try {
-      Map<String, dynamic> surveyData = {
+      String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+      Map<String, dynamic> currentSurveyData = {
         'transport': getOptionText(0, questionResponses),
         'flights_year': getOptionText(1, questionResponses),
         'shopping_mode': getOptionText(2, questionResponses),
@@ -203,7 +207,31 @@ class _SurveyState extends State<Survey> {
         'timestamp': FieldValue.serverTimestamp(),
       };
 
-      await surveyCollection.add(surveyData);
+      await FirebaseFirestore.instance
+          .collection('Survey')
+          .doc(userId)
+          .set(currentSurveyData);
+
+      // Store historical survey data in the 'historical_data' collection
+      Map<String, dynamic> historicalSurveyData = {
+        'transport': getOptionText(0, questionResponses),
+        'flights_year': getOptionText(1, questionResponses),
+        'shopping_mode': getOptionText(2, questionResponses),
+        'energy_source_home': getOptionText(3, questionResponses),
+        'LED_bulbs': getOptionText(4, questionResponses),
+        'energy_intensive_appliances': getOptionText(5, questionResponses),
+        'protein_source': getOptionText(6, questionResponses),
+        'water_usage': getOptionText(7, questionResponses),
+        'recycle_waste': getOptionText(8, questionResponses),
+        'E-waste_recycle': getOptionText(9, questionResponses),
+        'carbonFootprint': carbonFootprint,
+        'timestamp': FieldValue.serverTimestamp(),
+      };
+      await FirebaseFirestore.instance
+          .collection('historical_data')
+          .doc(userId)
+          .collection('timestamps')
+          .add(historicalSurveyData);
 
       print('Survey data successfully stored in Firestore');
     } catch (e) {

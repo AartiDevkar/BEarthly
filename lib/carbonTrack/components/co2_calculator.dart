@@ -33,30 +33,30 @@ class CarbonCalculator {
   CarbonCalculator(this.context);
 
   static final List<List<double>> emissions = [
-    [0.05, 0.12, 0.08], // Transport (example: kg CO2 per km traveled)
+    [0.03, 0.08, 0.05], // Transport (example: kg CO2 per km traveled)
     [0.2, 0.1, 0.15, 0.18], // Flights (example: kg CO2 per passenger-km)
-    [0.03, 0.05, 0.02, 0.01], // Shopping (example: kg CO2 per dollar spent)
-    [0.1, 0.08, 0.06], // Energy sources (example: kg CO2 per kWh)
-    [0.02, 0.01], // LED bulbs (example: kg CO2 per hour of use)
-    [0.15, 0.12, 0.08, 0.05], // Appliances (example: kg CO2 per hour of use)
+    [0.02, 0.03, 0.01, 0.005], // Shopping (example: kg CO2 per dollar spent)
+    [0.05, 0.04, 0.03], // Energy sources (example: kg CO2 per kWh)
+    [0.01, 0.005], // LED bulbs (example: kg CO2 per hour of use)
+    [0.1, 0.08, 0.05, 0.03], // Appliances (example: kg CO2 per hour of use)
     [
-      0.05,
       0.03,
       0.02,
-      0.01
+      0.01,
+      0.004
     ], // Protein sources (example: kg CO2 per gram of protein)
     [
-      0.02,
-      0.03,
       0.01,
-      0.04
-    ], // Water usage (example: kg CO2 per gallon of water)
-    [0.03, 0.02, 0.01, 0.005], // Recycle (example: kg CO2 per item recycled)
-    [
-      0.02,
       0.015,
+      0.005,
+      0.002
+    ], // Water usage (example: kg CO2 per gallon of water)
+    [0.02, 0.01, 0.005, 0.002], // Recycle (example: kg CO2 per item recycled)
+    [
       0.01,
-      0.005
+      0.007,
+      0.005,
+      0.002
     ], // E-waste recycle (example: kg CO2 per item recycled)
   ];
 

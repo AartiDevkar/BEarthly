@@ -30,8 +30,19 @@ class _IndicatorState extends State<Indicator> {
 
   Future<void> _calculateTotalCarbonFootprint() async {
     CarbonCalculator calculator = CarbonCalculator(context);
-    totalCarbonFootprint = calculator.calculateFootprints(
-        questionResponses.map((response) => response.transport).toList());
+    totalCarbonFootprint = calculator.calculateFootprints(questionResponses
+        .map((response) =>
+            response.transport +
+            response.flightsYear +
+            response.shoppingMode +
+            response.energySourceHome +
+            response.ledBulbs +
+            response.energyIntensiveAppliances +
+            response.proteinSource +
+            response.waterUsage +
+            response.recycleWaste +
+            response.eWasteRecycle)
+        .toList());
 
     // Assuming that the total carbon footprint is in the range [0, 1]
 
@@ -52,14 +63,15 @@ class _IndicatorState extends State<Indicator> {
           child: CircularPercentIndicator(
             radius: 125.0,
             lineWidth: 20,
+
             backgroundColor: Color.fromARGB(148, 34, 74, 67),
             percent: widget.percent, // Use the widget's percent parameter
             center: Text(
-              "${(widget.percent * 100).toStringAsFixed(0)}%", // Format percent
-              style: TextStyle(fontSize: 40),
+              "${(totalCarbonFootprint.toStringAsFixed(2))} kg CO2e", // Format percent
+              style: TextStyle(fontSize: 28),
             ),
             footer: const Padding(
-              padding: EdgeInsets.only(top: 8.0), // Add padding here
+              padding: EdgeInsets.only(top: 7.0), // Add padding here
               child: Text(
                 "This month's carbon footprint ",
                 style: TextStyle(fontSize: 18, color: Colors.white),
@@ -72,7 +84,7 @@ class _IndicatorState extends State<Indicator> {
           ),
         ),
         const SizedBox(
-          height: 120,
+          height: 100,
         ),
         Row(
           children: <Widget>[
@@ -192,7 +204,7 @@ class _IndicatorState extends State<Indicator> {
             ),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         Container(
           child: LinearPercentIndicator(
             backgroundColor: Color.fromARGB(148, 34, 74, 67),
@@ -210,7 +222,7 @@ class _IndicatorState extends State<Indicator> {
           ),
         ),
         const SizedBox(
-          height: 5,
+          height: 2,
         ),
         Container(
           child: LinearPercentIndicator(
@@ -229,7 +241,7 @@ class _IndicatorState extends State<Indicator> {
           ),
         ),
         const SizedBox(
-          height: 5,
+          height: 2,
         ),
         Container(
           child: LinearPercentIndicator(
