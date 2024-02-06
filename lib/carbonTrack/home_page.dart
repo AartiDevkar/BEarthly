@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               alignment: Alignment.topCenter,
               padding: EdgeInsets.only(
-                  top: 70, left: 60, right: 60), // Adjust padding
+                  top: 40, left: 60, right: 60), // Adjust padding
               child: Indicator(
                 percent: calculatedPercent,
                 co2eKg: 0,
@@ -165,7 +165,6 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.center,
             child: ElevatedButton(
               onPressed: _openSurveyForm,
-              child: Text('Open Survey'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 191, 228, 228),
                 shape: ContinuousRectangleBorder(
@@ -173,6 +172,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 padding: EdgeInsets.all(20),
               ),
+              child: const Text('Open Survey'),
             ),
           ),
         ],

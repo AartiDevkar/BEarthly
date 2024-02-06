@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:bearthly/recycle_pages/components/bar_graph/bar_graph.dart';
-import 'package:bearthly/recycle_pages/components/pie_chart_components/piechart.dart';
+import 'package:bearthly/track_pages/components/bar_graph/bar_graph.dart';
+import 'package:bearthly/track_pages/components/pie_chart_components/piechart.dart';
 
-class Recycle extends StatefulWidget {
-  const Recycle({super.key});
+class Track extends StatefulWidget {
+  const Track({super.key});
 
   @override
-  State<Recycle> createState() => _RecycleState();
+  State<Track> createState() => _TrackState();
 }
 
-class _RecycleState extends State<Recycle> {
+class _TrackState extends State<Track> {
   int currentIndex = 0;
 
   @override

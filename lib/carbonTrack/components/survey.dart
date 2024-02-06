@@ -38,7 +38,6 @@ class _SurveyState extends State<Survey> {
       'options': [
         'In-store shopping',
         'Online shopping with fast shipping',
-        'Online shopping with eco-friendly shipping options',
         'I rarely shop for everyday items'
       ],
     },
@@ -165,10 +164,10 @@ class _SurveyState extends State<Survey> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               questions[index]['question'] ?? '',
-              style: TextStyle(fontSize: 16.0),
+              style: const TextStyle(fontSize: 16.0),
             ),
             SizedBox(height: 16.0),
             for (int i = 0; i < questions[index]['options']!.length; i++)
@@ -235,6 +234,7 @@ class _SurveyState extends State<Survey> {
 
       print('Survey data successfully stored in Firestore');
     } catch (e) {
+      // ignore: avoid_print
       print('Error storing survey data: $e');
     }
   }

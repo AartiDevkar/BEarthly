@@ -1,6 +1,6 @@
 import 'package:bearthly/carbonTrack/home_page.dart';
 import 'package:bearthly/connect_pages/Connect.dart';
-import 'package:bearthly/recycle_pages/recycle.dart';
+import 'package:bearthly/track_pages/track.dart';
 import 'package:bearthly/reduce_pages/reduce.dart';
 import 'package:bearthly/sign_up_pages/pages/login_page.dart';
 
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
       routes: {
         '/reduce': (context) => const Reduce(),
-        '/recycle': (context) => const Recycle(),
+        '/recycle': (context) => const Track(),
         '/connect': (context) => const Connect(),
         '/login': ((context) => const LoginPage())
       },

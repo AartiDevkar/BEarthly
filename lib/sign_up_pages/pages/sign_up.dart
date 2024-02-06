@@ -4,10 +4,11 @@ import 'package:bearthly/sign_up_pages/components/my_button.dart';
 import 'package:bearthly/sign_up_pages/components/my_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatefulWidget {
-  Signup({super.key});
+  const Signup({super.key});
 
   @override
   State<Signup> createState() => _SignupState();
@@ -52,13 +53,16 @@ class _SignupState extends State<Signup> {
           createUserDocument(_user!.uid, _user!.email!, username);
 
           // Navigate to the home page
+          // ignore: use_build_context_synchronously
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const HomePage()),
           );
         }
       } catch (e) {
-        print("Sign Up error: $e");
+        if (kDebugMode) {
+          print("Sign Up error: $e");
+        }
       }
     }
   }

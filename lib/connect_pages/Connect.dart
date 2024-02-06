@@ -73,6 +73,54 @@ class _ConnectState extends State<Connect> {
                 _shareAchievement();
               },
             ),
+            PostItem(
+              imageUrl:
+                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png',
+              onConnect: () {
+                // Implement logic to display contact information on Connect click
+                print('Connect clicked - Display contact info');
+              },
+              onKnowMore: () {
+                // Launch the NGO's/org's website on Know More click
+                _launchURL('https://ngo-website.com');
+              },
+              onShare: () {
+                // Share the achievement on social media
+                _shareAchievement();
+              },
+            ),
+            PostItem(
+              imageUrl:
+                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png',
+              onConnect: () {
+                // Implement logic to display contact information on Connect click
+                print('Connect clicked - Display contact info');
+              },
+              onKnowMore: () {
+                // Launch the NGO's/org's website on Know More click
+                _launchURL('https://ngo-website.com');
+              },
+              onShare: () {
+                // Share the achievement on social media
+                _shareAchievement();
+              },
+            ),
+            PostItem(
+              imageUrl:
+                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png',
+              onConnect: () {
+                // Implement logic to display contact information on Connect click
+                print('Connect clicked - Display contact info');
+              },
+              onKnowMore: () {
+                // Launch the NGO's/org's website on Know More click
+                _launchURL('https://ngo-website.com');
+              },
+              onShare: () {
+                // Share the achievement on social media
+                _shareAchievement();
+              },
+            ),
             // Add more PostItem widgets with different image URLs as needed
           ],
         ),
