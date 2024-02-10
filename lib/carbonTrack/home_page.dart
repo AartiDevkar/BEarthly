@@ -1,6 +1,5 @@
 import 'package:bearthly/carbonTrack/components/survey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,16 +12,41 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int currentIndex = 0;
   double calculatedPercent = 0.0;
 
   String userName = '';
 
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
     _fetchUserName();
+
+    // Initialize the animation controller
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    );
+
+    // Define the animation curve
+    final CurvedAnimation curve =
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
+
+    // Define the opacity animation
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(curve);
+
+    // Start the animation
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   Future<void> _fetchUserName() async {
@@ -82,7 +106,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         );
@@ -90,47 +114,19 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Function to check if the survey has been filled by the user
-  Future<bool> _hasFilledSurvey() async {
-    try {
-      // Get the current user ID from FirebaseAuth
-      String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-
-      // Check if the user ID is not empty
-      if (userId.isNotEmpty) {
-        // Reference to the Firestore collection for user surveys
-        CollectionReference userSurveysCollection =
-            FirebaseFirestore.instance.collection('Survey');
-
-        // Query to check if a document with the current user ID exists
-        QuerySnapshot querySnapshot = await userSurveysCollection
-            .where('userId', isEqualTo: userId)
-            .get();
-
-        // If a document exists, the survey is considered filled
-        return querySnapshot.docs.isNotEmpty;
-      }
-    } catch (e) {
-      print('Error checking survey status: $e');
-    }
-
-    // Default to false in case of errors
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:
-            Color.fromARGB(255, 163, 234, 245), // Make app bar transparent
-        elevation: 6, // Remove app bar shadow
+        backgroundColor: Color.fromARGB(255, 191, 228, 228),
+        elevation: 7, // Remove app bar shadow
+        scrolledUnderElevation: screenHeight,
         title: Text(
-          "Hello " + userName,
-          style: TextStyle(
+          "Hello $userName",
+          style: const TextStyle(
             fontSize: 18,
-            color: const Color.fromARGB(255, 23, 21, 21),
+            color: Color.fromARGB(255, 23, 21, 21),
           ),
         ),
       ),
@@ -138,7 +134,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Container(
             height: screenHeight,
-            width: 450,
+            width: 650,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -153,7 +149,7 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Container(
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   top: 40, left: 60, right: 60), // Adjust padding
               child: Indicator(
                 percent: calculatedPercent,
@@ -161,22 +157,18 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: _openSurveyForm,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 191, 228, 228),
-                shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                padding: EdgeInsets.all(20),
-              ),
-              child: const Text('Open Survey'),
-            ),
-          ),
         ],
       ),
+      floatingActionButton: ScaleTransition(
+        scale: _animation,
+        child: FloatingActionButton.extended(
+          onPressed: _openSurveyForm,
+          label: const Text('Take Survey'),
+          icon: const Icon(Icons.assignment),
+          backgroundColor: Color.fromARGB(255, 232, 208, 135),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {
@@ -184,16 +176,16 @@ class _HomePageState extends State<HomePage> {
           // Navigate to the corresponding page when an icon is tapped
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/');
               break;
             case 1:
-              Navigator.pushNamed(context, '/reduce');
+              Navigator.pushReplacementNamed(context, '/track');
               break;
             case 2:
-              Navigator.pushNamed(context, '/recycle');
+              Navigator.pushReplacementNamed(context, '/reduce');
               break;
             case 3:
-              Navigator.pushNamed(context, '/connect');
+              Navigator.pushReplacementNamed(context, '/connect');
               break;
           }
         },

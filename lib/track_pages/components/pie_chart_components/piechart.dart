@@ -56,7 +56,7 @@ class PiechartState extends State {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Indicator_piechart(
-                color: Colors.blue,
+                color: Color.fromARGB(255, 77, 152, 145),
                 text: 'First',
                 isSquare: true,
               ),
@@ -64,7 +64,7 @@ class PiechartState extends State {
                 height: 4,
               ),
               Indicator_piechart(
-                color: Colors.yellow,
+                color: Color.fromARGB(255, 51, 142, 65),
                 text: 'Second',
                 isSquare: true,
               ),
@@ -72,7 +72,7 @@ class PiechartState extends State {
                 height: 4,
               ),
               Indicator_piechart(
-                color: Colors.purple,
+                color: Color.fromARGB(255, 100, 129, 124),
                 text: 'Third',
                 isSquare: true,
               ),
@@ -80,7 +80,7 @@ class PiechartState extends State {
                 height: 4,
               ),
               Indicator_piechart(
-                color: Colors.green,
+                color: Color.fromARGB(255, 111, 197, 137),
                 text: 'Fourth',
                 isSquare: true,
               ),
@@ -106,33 +106,33 @@ class PiechartState extends State {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: Colors.green,
+            color: Color.fromRGBO(55, 198, 164, 1),
             value: 40,
             title: '40%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: Colors.red,
+              color: Color.fromARGB(255, 225, 249, 241),
               shadows: shadows,
             ),
           );
         case 1:
           return PieChartSectionData(
-            color: Colors.yellow,
+            color: Color.fromARGB(255, 51, 142, 65),
             value: 30,
             title: '30%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: Colors.pink,
+              color: Color.fromARGB(255, 225, 249, 241),
               shadows: shadows,
             ),
           );
         case 2:
           return PieChartSectionData(
-            color: Colors.blue,
+            color: Color.fromARGB(255, 105, 121, 135),
             value: 15,
             title: '15%',
             radius: radius,
@@ -145,14 +145,14 @@ class PiechartState extends State {
           );
         case 3:
           return PieChartSectionData(
-            color: Colors.purple,
+            color: Color.fromARGB(255, 56, 109, 135),
             value: 15,
             title: '15%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: Colors.deepOrange,
+              color: Color.fromARGB(255, 225, 249, 241),
               shadows: shadows,
             ),
           );

@@ -59,12 +59,6 @@ class _IndicatorState extends State<Indicator> {
 
   @override
   Widget build(BuildContext context) {
-    double transportPercent = totalCarbonFootprint / 1.0;
-    double energyPercent =
-        totalCarbonFootprint / 1.0; // Change this based on your calculation
-    double foodPercent =
-        totalCarbonFootprint / 1.0; // Change this based on your calculation
-
     return Column(
       children: [
         Container(
@@ -93,125 +87,6 @@ class _IndicatorState extends State<Indicator> {
         ),
         const SizedBox(
           height: 100,
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                height: 130,
-                width: 100,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  border:
-                      Border.all(color: const Color.fromARGB(255, 77, 65, 65)),
-                  borderRadius: BorderRadius.circular(16),
-                  color: const Color.fromARGB(148, 34, 74, 67),
-                ),
-                child: Container(
-                  child: Column(
-                    children: [
-                      const Icon(
-                        Icons.emoji_transportation,
-                        size: 40,
-                      ),
-                      const Text(
-                        'Transport',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      LinearPercentIndicator(
-                        progressColor: const Color.fromARGB(255, 216, 79, 237),
-                        barRadius: const Radius.circular(15),
-                        percent: transportPercent,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Container(
-                height: 130,
-                width: 100,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  border:
-                      Border.all(color: const Color.fromARGB(255, 77, 65, 65)),
-                  borderRadius: BorderRadius.circular(16),
-                  color: const Color.fromARGB(148, 34, 74, 67),
-                ),
-                child: Container(
-                  child: Column(
-                    children: [
-                      const Icon(
-                        Icons.energy_savings_leaf,
-                        size: 40,
-                      ),
-                      const Text(
-                        'Energy',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      LinearPercentIndicator(
-                        progressColor: const Color.fromARGB(255, 216, 79, 237),
-                        barRadius: const Radius.circular(15),
-                        percent: energyPercent,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Container(
-                height: 130,
-                width: 100,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  border:
-                      Border.all(color: const Color.fromARGB(255, 77, 65, 65)),
-                  borderRadius: BorderRadius.circular(16),
-                  color: const Color.fromARGB(148, 34, 74, 67),
-                ),
-                // ignore: avoid_unnecessary_containers
-                child: Container(
-                  child: Column(
-                    children: [
-                      const Icon(
-                        Icons.food_bank,
-                        size: 40,
-                      ),
-                      const Text(
-                        'Food',
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      LinearPercentIndicator(
-                        progressColor: const Color.fromARGB(255, 216, 79, 237),
-                        barRadius: const Radius.circular(15),
-                        percent: foodPercent,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
         ),
         const SizedBox(height: 10),
         Container(

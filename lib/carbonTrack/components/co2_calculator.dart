@@ -97,8 +97,8 @@ class CarbonCalculator {
     double travelFootprints =
         (getEmissionValue(questionResponses[0]?.toString() ?? '1', 0)) * 40 +
             (getEmissionValue(questionResponses[1]?.toString() ?? '1', 1)) *
-                30 +
-            getEmissionValue(questionResponses[2]?.toString() ?? '1', 2) * 20;
+                80 +
+            getEmissionValue(questionResponses[2]?.toString() ?? '1', 2) * 60;
     double houseHoldFootprints =
         getEmissionValue(questionResponses[3]?.toString() ?? '1', 3) * 30 +
             getEmissionValue(questionResponses[4]?.toString() ?? '1', 4) * 20 +
@@ -107,7 +107,7 @@ class CarbonCalculator {
         getEmissionValue(questionResponses[6]?.toString() ?? '1', 6) * 20;
     double recycleFootprints =
         (getEmissionValue(questionResponses[8]?.toString() ?? '1', 8)) * 10 +
-            (getEmissionValue(questionResponses[9]?.toString() ?? '1', 9)) * 3;
+            (getEmissionValue(questionResponses[9]?.toString() ?? '1', 9)) * 20;
 
     double totalCarbon = travelFootprints +
         houseHoldFootprints +
@@ -115,6 +115,10 @@ class CarbonCalculator {
         recycleFootprints;
 
     print("Total carbon footprint: $totalCarbon");
+    print("Travel carbon footprint: $travelFootprints");
+    print("Food carbon footprint: $foodFootprints");
+    print("Household carbon footprint: $houseHoldFootprints");
+    print("Recycle carbon footprint: $recycleFootprints");
     return totalCarbon;
   }
 

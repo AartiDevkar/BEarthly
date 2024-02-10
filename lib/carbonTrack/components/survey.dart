@@ -43,7 +43,11 @@ class _SurveyState extends State<Survey> {
     },
     {
       'question': 'What type of energy sources power your home?',
-      'options': ['Solar', 'Wind', 'Other'],
+      'options': [
+        'Solar',
+        'Electricity from the grid (Utility company)',
+        'Other'
+      ],
     },
     {
       'question': 'Do you use LED bulbs in your home?',

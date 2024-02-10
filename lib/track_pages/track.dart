@@ -10,7 +10,7 @@ class Track extends StatefulWidget {
 }
 
 class _TrackState extends State<Track> {
-  int currentIndex = 0;
+  int currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,47 @@ class _TrackState extends State<Track> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          setState(() => currentIndex = index);
+          // Navigate to the corresponding page when an icon is tapped
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/track');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/reduce');
+              break;
+            case 3:
+              Navigator.pushNamed(context, '/connect');
+              break;
+          }
+        },
+        selectedItemColor: const Color.fromARGB(255, 20, 137, 135),
+        unselectedItemColor: const Color.fromARGB(255, 121, 154, 203),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.arrow_downward),
+            label: 'Track',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.recycling),
+            label: 'Reduce',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people_alt_rounded),
+            label: 'Connect',
+          ),
+        ],
       ),
     );
   }

@@ -12,7 +12,7 @@ class Connect extends StatefulWidget {
 
 class _ConnectState extends State<Connect> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  int currentIndex = 3;
   Future<void> _signOut() async {
     try {
       await _auth.signOut();
@@ -53,7 +53,6 @@ class _ConnectState extends State<Connect> {
         ],
       ),
       body: Container(
-        color: Color.fromRGBO(8, 128, 90, 0.833),
         padding: EdgeInsets.all(16),
         child: ListView(
           children: [
@@ -125,6 +124,47 @@ class _ConnectState extends State<Connect> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          setState(() => currentIndex = index);
+          // Navigate to the corresponding page when an icon is tapped
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/track');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/reduce');
+              break;
+            case 3:
+              // Navigator.pushNamed(context, '/connect');
+              break;
+          }
+        },
+        selectedItemColor: const Color.fromARGB(255, 20, 137, 135),
+        unselectedItemColor: const Color.fromARGB(255, 121, 154, 203),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.arrow_downward),
+            label: 'Track',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.recycling),
+            label: 'Reduce',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people_alt_rounded),
+            label: 'Connect',
+          ),
+        ],
+      ),
     );
   }
 }
@@ -148,7 +188,7 @@ class PostItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.grey[900],
+        color: Color.fromARGB(255, 121, 203, 195),
         borderRadius: BorderRadius.circular(12),
       ),
       padding: EdgeInsets.all(16),

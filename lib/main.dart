@@ -32,10 +32,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: onboardingShown ? LoginPage() : const OnBoardingScreen(),
       // onGenerateRoute: AppRouter.generateRoute,
-      home: HomePage(),
+      home: const HomePage(),
       routes: {
         '/reduce': (context) => const Reduce(),
-        '/recycle': (context) => const Track(),
+        '/track': (context) => const Track(),
         '/connect': (context) => const Connect(),
         '/login': ((context) => const LoginPage())
       },
