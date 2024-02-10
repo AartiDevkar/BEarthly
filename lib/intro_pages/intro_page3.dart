@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// IntroPage3
 class IntroPage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,18 +30,30 @@ class IntroPage3 extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      Color.fromARGB(255, 38, 74, 135).withOpacity(0.8),
+                      const Color.fromARGB(255, 38, 74, 135).withOpacity(0.8),
                     ],
                   ),
                 ),
               ),
               const Center(
-                child: Text(
-                  "Make every choice count. Start your eco-journey today.",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
+                child: Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: Text(
+                    "Make every choice count. Start your eco-journey today.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 247, 234, 117),
+                      fontWeight: FontWeight.w900,
+                      fontFamily: 'Pacifico', // Using Pacifico font
+                      fontSize: 35,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 5,
+                          color: Colors.black,
+                          offset: Offset(3, 3),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
