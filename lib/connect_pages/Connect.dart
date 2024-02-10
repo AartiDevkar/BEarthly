@@ -1,7 +1,6 @@
-// Import necessary packages
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
+import 'package:url_launcher/url_launcher.dart';
 
 class Connect extends StatefulWidget {
   const Connect({Key? key}) : super(key: key);
@@ -13,6 +12,7 @@ class Connect extends StatefulWidget {
 class _ConnectState extends State<Connect> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   int currentIndex = 3;
+
   Future<void> _signOut() async {
     try {
       await _auth.signOut();
@@ -26,98 +26,164 @@ class _ConnectState extends State<Connect> {
 
   // Function to launch a URL
   _launchURL(String url) async {
-    if (await canLaunch("")) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    try {
+      Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
     }
   }
 
-  // Function to share achievements on social media
-  _shareAchievement() {
-    // Implement the logic to share achievements on social media here
-    // You can use packages like share_plus to facilitate sharing
-  }
+  // Placeholder function for sharing achievements
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Connect'),
-        backgroundColor: Color.fromARGB(255, 191, 228, 228),
+        title: const Text('Connect'),
+        backgroundColor: const Color.fromARGB(255, 191, 228, 228),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: _signOut,
           ),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
             PostItem(
               imageUrl:
-                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png',
+                  'https://im.whatshot.in/img/2020/Jun/istock-1130655067-cropped-1591265020.jpg',
               onConnect: () {
                 // Implement logic to display contact information on Connect click
-                print('Connect clicked - Display contact info');
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: const Text('Contact Information'),
+                    content: const Text('Contact information goes here.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
               },
               onKnowMore: () {
                 // Launch the NGO's/org's website on Know More click
-                _launchURL('https://ngo-website.com');
-              },
-              onShare: () {
-                // Share the achievement on social media
-                _shareAchievement();
+                _launchURL('https://www.greenyatra.org/');
               },
             ),
             PostItem(
               imageUrl:
-                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png',
+                  'https://lifesup.com.vn/wp-content/uploads/2022/10/4-min.png',
               onConnect: () {
                 // Implement logic to display contact information on Connect click
-                print('Connect clicked - Display contact info');
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: const Text('Contact Information'),
+                    content: const Text('Contact information goes here.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
               },
               onKnowMore: () {
                 // Launch the NGO's/org's website on Know More click
-                _launchURL('https://ngo-website.com');
-              },
-              onShare: () {
-                // Share the achievement on social media
-                _shareAchievement();
+                _launchURL('https://www.greenyatra.org/');
               },
             ),
             PostItem(
               imageUrl:
-                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png',
+                  'https://climatefactchecks.org/wp-content/uploads/2023/06/image-4-300x169.png',
               onConnect: () {
                 // Implement logic to display contact information on Connect click
-                print('Connect clicked - Display contact info');
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: const Text('Contact Information'),
+                    content: const Text('Contact information goes here.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
               },
               onKnowMore: () {
                 // Launch the NGO's/org's website on Know More click
-                _launchURL('https://ngo-website.com');
+                _launchURL('https://www.greenyatra.org/');
               },
-              onShare: () {
-                // Share the achievement on social media
-                _shareAchievement();
+            ),
+            PostItem(
+              imageUrl: 'https://waidy.it/img/post/how-to-reduce-pollution.jpg',
+              onConnect: () {
+                // Implement logic to display contact information on Connect click
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: const Text('Contact Information'),
+                    content: const Text('Contact information goes here.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              onKnowMore: () {
+                // Launch the NGO's/org's website on Know More click
+                _launchURL('https://www.greenyatra.org/');
               },
             ),
             PostItem(
               imageUrl:
-                  'https://images.yourstory.com/cs/2/628912e0d7f211eb8e8307e5b6451cf7/Carbonneutral-1659616776710.png',
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSoubd5-3h4hmQdLukAtoTpia5ATxwnj4WULM_v41pJ9AUQ6jKygyW7mPqHWcT_ufyfSI&usqp=CAU',
               onConnect: () {
                 // Implement logic to display contact information on Connect click
-                print('Connect clicked - Display contact info');
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: const Text('Contact Information'),
+                    content: const Text('Contact information goes here.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
               },
               onKnowMore: () {
                 // Launch the NGO's/org's website on Know More click
-                _launchURL('https://ngo-website.com');
-              },
-              onShare: () {
-                // Share the achievement on social media
-                _shareAchievement();
+                _launchURL('https://www.greenyatra.org/');
               },
             ),
             // Add more PostItem widgets with different image URLs as needed
@@ -173,25 +239,23 @@ class PostItem extends StatelessWidget {
   final String imageUrl;
   final VoidCallback onConnect;
   final VoidCallback onKnowMore;
-  final VoidCallback onShare;
 
   const PostItem({
     Key? key,
     required this.imageUrl,
     required this.onConnect,
     required this.onKnowMore,
-    required this.onShare,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 121, 203, 195),
+        color: const Color.fromARGB(255, 121, 203, 195),
         borderRadius: BorderRadius.circular(12),
       ),
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -205,13 +269,12 @@ class PostItem extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               PopupMenuButton<String>(
-                iconColor: Color.fromARGB(255, 191, 228, 228),
-                color: Color.fromARGB(255, 191, 228, 228),
+                icon: const Icon(Icons.more_vert),
                 itemBuilder: (BuildContext context) {
                   return ['Connect', 'Know More'].map((String choice) {
                     return PopupMenuItem<String>(
@@ -228,10 +291,6 @@ class PostItem extends StatelessWidget {
                     onKnowMore();
                   }
                 },
-              ),
-              IconButton(
-                icon: Icon(Icons.share),
-                onPressed: onShare,
               ),
             ],
           ),
