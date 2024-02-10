@@ -3,7 +3,7 @@ import 'package:bearthly/track_pages/components/bar_graph/bar_graph.dart';
 import 'package:bearthly/track_pages/components/pie_chart_components/piechart.dart';
 
 class Track extends StatefulWidget {
-  const Track({super.key});
+  const Track({Key? key}) : super(key: key);
 
   @override
   State<Track> createState() => _TrackState();
@@ -11,6 +11,7 @@ class Track extends StatefulWidget {
 
 class _TrackState extends State<Track> {
   int currentIndex = 1;
+  String currentActivity = '';
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,16 @@ class _TrackState extends State<Track> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              // GestureDetector(
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       // Call the method to start activity recognition
+              //       ActivityRecognitionUtil.startActivityRecognition(context);
+              //     },
+              //     child: Text('Start Activity Recognition'),
+              //   ),
+              // ),
+              // Add some space between charts
               BarChartSample2(),
               SizedBox(height: 20), // Add some space between charts
               Piechart(),
