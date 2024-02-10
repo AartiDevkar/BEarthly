@@ -254,14 +254,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_geofence:
-    dependency: "direct main"
-    description:
-      name: flutter_geofence
-      sha256: "3b3b010dec73856a571e17b17550e1a78f63ef8b2d6da436c21c813751625b04"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.4"
   flutter_lints:
     dependency: "direct main"
     description:
@@ -480,14 +472,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
-  pedometer:
-    dependency: "direct main"
-    description:
-      name: pedometer
-      sha256: e8c574dae778276fa848873c6ea2015a636a91e8572a4a652b04a4fcd6c54259
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.1"
   percent_indicator:
     dependency: "direct main"
     description:

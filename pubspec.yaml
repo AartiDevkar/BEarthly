@@ -41,8 +41,8 @@ dependencies:
  
   geolocator: ^10.1.0
   permission_handler: ^11.2.0
-  activity_recognition_flutter: ^5.0.0
- 
+  
+  
 
   percent_indicator: ^4.0.1
   cloud_firestore: ^4.9.2
@@ -60,8 +60,8 @@ dependencies:
   firebase_app_check: ^0.2.1+8
 
   google_sign_in: ^6.2.1
-  flutter_geofence: ^0.4.4
-  pedometer: ^4.0.1
+  activity_recognition_flutter: ^5.0.0
+  
  
 dev_dependencies:
   flutter_test:
