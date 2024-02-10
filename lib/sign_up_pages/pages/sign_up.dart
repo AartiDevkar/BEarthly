@@ -154,9 +154,9 @@ class _SignupState extends State<Signup> {
                                   obscureText: false,
                                 ),
                                 const SizedBox(height: 10),
-                                MyTextField(
+                                MyPasswordTextField(
                                   controller: passwordController,
-                                  hintText: 'Password',
+                                  hintText: ' Password',
                                   obscureText: true,
                                 ),
 

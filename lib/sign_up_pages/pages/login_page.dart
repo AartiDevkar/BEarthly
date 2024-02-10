@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.center,
             children: [
               Container(
-                height: 850,
+                height: 950,
                 width: 450,
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(

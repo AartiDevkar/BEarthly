@@ -66,7 +66,15 @@ class _MyPasswordTextFieldState extends State<MyPasswordTextField> {
     return TextFormField(
       autovalidateMode:
           AutovalidateMode.onUserInteraction, // Auto-validate on interaction
-      validator: (val) => val!.isEmpty ? 'Enter your password' : null,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter a password';
+        }
+        if (value.length < 6) {
+          return 'Password must be at least 6 characters long';
+        }
+        return null;
+      },
       controller: widget.controller,
       obscureText: !_isPasswordVisible,
       decoration: InputDecoration(
