@@ -238,7 +238,7 @@ class _SurveyState extends State<Survey> {
 
       print('Survey data successfully stored in Firestore');
     } catch (e) {
-      // ignore: avoid_print
+// ignore: avoid_print
       print('Error storing survey data: $e');
     }
   }

@@ -68,8 +68,8 @@ class _IndicatorState extends State<Indicator> {
 
             backgroundColor: const Color.fromARGB(148, 34, 74, 67),
             percent: widget.percent, // Use the widget's percent parameter
-            center: Text(
-              "${(totalCarbonFootprint.toStringAsFixed(2))} kg CO2e", // Format percent
+            center: new Text(
+              "${(widget.percent * 100).toStringAsFixed(2)} kg CO2e", // Format percent
               style: const TextStyle(fontSize: 28),
             ),
             footer: const Padding(
