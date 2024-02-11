@@ -33,6 +33,16 @@ class _SignupState extends State<Signup> {
   void signUpUser() async {
     if (_formKey.currentState!.validate()) {
       // Validation passed
+      if (passwordController.text != confirmPasswordController.text) {
+        // If passwords don't match, show an error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Passwords do not match"),
+          ),
+        );
+        return;
+      }
+
       try {
         final FirebaseAuth auth = FirebaseAuth.instance;
         final UserCredential userCredential =
@@ -53,7 +63,6 @@ class _SignupState extends State<Signup> {
           createUserDocument(_user!.uid, _user!.email!, username);
 
           // Navigate to the home page
-          // ignore: use_build_context_synchronously
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const HomePage()),

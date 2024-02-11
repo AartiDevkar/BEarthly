@@ -66,6 +66,7 @@ class _MyPasswordTextFieldState extends State<MyPasswordTextField> {
     return TextFormField(
       autovalidateMode:
           AutovalidateMode.onUserInteraction, // Auto-validate on interaction
+
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter a password';
