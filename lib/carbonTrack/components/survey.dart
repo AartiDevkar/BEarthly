@@ -137,8 +137,20 @@ class _SurveyState extends State<Survey> {
                 onPressed: () async {
                   double totalCarbonFootprint =
                       _carbonCalculator.calculateFootprints(questionResponses);
+                  double travelFootprints = _carbonCalculator.travelFootprints;
+                  double houseHoldFootprints =
+                      _carbonCalculator.houseHoldFootprints;
+                  double foodFootprints = _carbonCalculator.foodFootprints;
+                  double recycleFootprints =
+                      _carbonCalculator.recycleFootprints;
+
                   await storeSurveyData(
-                      questionResponses, totalCarbonFootprint);
+                      questionResponses,
+                      totalCarbonFootprint,
+                      travelFootprints,
+                      houseHoldFootprints,
+                      foodFootprints,
+                      recycleFootprints);
                   double maxCarbonFootprint = 100.0;
                   double calculatedPercent =
                       totalCarbonFootprint / maxCarbonFootprint;
@@ -192,51 +204,55 @@ class _SurveyState extends State<Survey> {
   }
 
   Future<void> storeSurveyData(
-      List<String?> questionResponses, double carbonFootprint) async {
+      List<String?> questionResponses,
+      double totalCarbonFootprint,
+      double travelFootprints,
+      double houseHoldFootprints,
+      double foodFootprints,
+      double recycleFootprints) async {
     try {
-      String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-      Map<String, dynamic> currentSurveyData = {
-        'transport': getOptionText(0, questionResponses),
-        'flights_year': getOptionText(1, questionResponses),
-        'shopping_mode': getOptionText(2, questionResponses),
-        'energy_source_home': getOptionText(3, questionResponses),
-        'LED_bulbs': getOptionText(4, questionResponses),
-        'energy_intensive_appliances': getOptionText(5, questionResponses),
-        'protein_source': getOptionText(6, questionResponses),
-        'water_usage': getOptionText(7, questionResponses),
-        'recycle_waste': getOptionText(8, questionResponses),
-        'E-waste_recycle': getOptionText(9, questionResponses),
-        'carbonFootprint': carbonFootprint,
-        'timestamp': FieldValue.serverTimestamp(),
-      };
+      User? currentUser = FirebaseAuth.instance.currentUser;
 
-      await FirebaseFirestore.instance
-          .collection('Survey')
-          .doc(userId)
-          .set(currentSurveyData);
+      if (currentUser != null &&
+          currentUser.email != null &&
+          currentUser.email!.isNotEmpty) {
+        String userId = currentUser.email!;
+        Map<String, dynamic> currentSurveyData = {
+          'transport': getOptionText(0, questionResponses),
+          'flights_year': getOptionText(1, questionResponses),
+          'shopping_mode': getOptionText(2, questionResponses),
+          'energy_source_home': getOptionText(3, questionResponses),
+          'LED_bulbs': getOptionText(4, questionResponses),
+          'energy_intensive_appliances': getOptionText(5, questionResponses),
+          'protein_source': getOptionText(6, questionResponses),
+          'water_usage': getOptionText(7, questionResponses),
+          'recycle_waste': getOptionText(8, questionResponses),
+          'E-waste_recycle': getOptionText(9, questionResponses),
+          'carbonFootprint': totalCarbonFootprint,
+          'timestamp': FieldValue.serverTimestamp(),
+        };
 
-      // Store historical survey data in the 'historical_data' collection
-      Map<String, dynamic> historicalSurveyData = {
-        'transport': getOptionText(0, questionResponses),
-        'flights_year': getOptionText(1, questionResponses),
-        'shopping_mode': getOptionText(2, questionResponses),
-        'energy_source_home': getOptionText(3, questionResponses),
-        'LED_bulbs': getOptionText(4, questionResponses),
-        'energy_intensive_appliances': getOptionText(5, questionResponses),
-        'protein_source': getOptionText(6, questionResponses),
-        'water_usage': getOptionText(7, questionResponses),
-        'recycle_waste': getOptionText(8, questionResponses),
-        'E-waste_recycle': getOptionText(9, questionResponses),
-        'carbonFootprint': carbonFootprint,
-        'timestamp': FieldValue.serverTimestamp(),
-      };
-      await FirebaseFirestore.instance
-          .collection('historical_data')
-          .doc(userId)
-          .collection('timestamps')
-          .add(historicalSurveyData);
+        await FirebaseFirestore.instance
+            .collection('Survey')
+            .doc(userId)
+            .set(currentSurveyData);
 
-      print('Survey data successfully stored in Firestore');
+        //Store historical survey data in the 'historical_data' collection
+        Map<String, dynamic> historicalSurveyData = {
+          'totalCarbonFootprint': totalCarbonFootprint,
+          'travelFootprints': travelFootprints,
+          'houseHoldFootprints': houseHoldFootprints,
+          'foodFootprints': foodFootprints,
+          'recycleFootprints': recycleFootprints,
+          'timestamp': FieldValue.serverTimestamp(),
+        };
+        await FirebaseFirestore.instance
+            .collection('historical_data')
+            .doc(userId)
+            .set(historicalSurveyData);
+
+        print('Survey data successfully stored in Firestore');
+      }
     } catch (e) {
 // ignore: avoid_print
       print('Error storing survey data: $e');

@@ -30,6 +30,12 @@ class QuestionResponses {
 class CarbonCalculator {
   late BuildContext context;
   List<QuestionResponses> questionResponses = [];
+  double totalCarbonFootprint = 0.0;
+  double travelFootprints = 0.0;
+  double houseHoldFootprints = 0.0;
+  double foodFootprints = 0.0;
+  double recycleFootprints = 0.0;
+
   CarbonCalculator(this.context);
 
   static final List<List<double>> emissions = [
