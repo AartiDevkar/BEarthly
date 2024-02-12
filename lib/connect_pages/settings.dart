@@ -94,7 +94,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: const Row(
                 children: [
-                  Icon(Icons.history),
+                  Icon(Icons.edit),
                   SizedBox(width: 8.0),
                   Text('Edit Profile'),
                 ],
@@ -114,7 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: const Row(
                 children: [
-                  Icon(Icons.history),
+                  Icon(Icons.notifications_none),
                   SizedBox(width: 8.0),
                   Text('Notifications'),
                 ],
@@ -126,7 +126,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: const Row(
                 children: [
-                  Icon(Icons.feedback),
+                  Icon(Icons.feedback_outlined),
                   SizedBox(width: 8.0),
                   Text('Give Feedback'),
                 ],

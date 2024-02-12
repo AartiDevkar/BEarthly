@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                     onPressed: () {},
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.15),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 90),
                     child: const Text("BEarthly",
@@ -245,10 +245,6 @@ class _LoginPageState extends State<LoginPage> {
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      // facebook button
-
-                                      SizedBox(height: 5),
-
                                       // google button
                                       SquareTile(
                                         imagePath: 'assets/images/google.png',
