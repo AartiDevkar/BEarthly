@@ -1,5 +1,6 @@
+import 'package:bearthly/connect_pages/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class Connect extends StatefulWidget {
@@ -10,19 +11,7 @@ class Connect extends StatefulWidget {
 }
 
 class _ConnectState extends State<Connect> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   int currentIndex = 3;
-
-  Future<void> _signOut() async {
-    try {
-      await _auth.signOut();
-      // Navigate to the login or onboarding screen
-      // ignore: use_build_context_synchronously
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-    } catch (e) {
-      print('Error signing out: $e');
-    }
-  }
 
   // Function to launch a URL
   _launchURL(String url) async {
@@ -48,9 +37,19 @@ class _ConnectState extends State<Connect> {
         backgroundColor: const Color.fromARGB(255, 191, 228, 228),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _signOut,
-          ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const SettingsPage()), // Replace SettingsPage with your desired page
+                );
+              },
+              icon: const Icon(Icons.settings))
+          // IconButton(
+          //   icon: const Icon(Icons.logout),
+          //   onPressed: _signOut,
+          // ),
         ],
       ),
       body: Container(
