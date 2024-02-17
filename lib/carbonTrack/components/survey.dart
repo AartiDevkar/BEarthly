@@ -101,65 +101,71 @@ class _SurveyState extends State<Survey> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 600,
-      width: 800,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Carbon Tracker Survey'),
-          backgroundColor: Colors.teal,
-        ),
-        body: Container(
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: questions.length,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPageIndex = index;
-              });
-            },
-            itemBuilder: (context, index) {
-              return _buildQuestionCard(index);
-            },
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+      child: Container(
+        height: 600,
+        width: 980,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(''),
+            backgroundColor: Colors.teal,
           ),
+          body: Container(
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: questions.length,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPageIndex = index;
+                });
+              },
+              itemBuilder: (context, index) {
+                return _buildQuestionCard(index);
+              },
+            ),
+          ),
+          floatingActionButton: _currentPageIndex < questions.length - 1
+              ? FloatingActionButton(
+                  onPressed: () {
+                    _pageController.nextPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Icon(Icons.arrow_forward),
+                )
+              : FloatingActionButton(
+                  onPressed: () async {
+                    double totalCarbonFootprint = _carbonCalculator
+                        .calculateFootprints(questionResponses);
+
+                    double travelFootprints =
+                        _carbonCalculator.travelFootprints;
+                    double houseHoldFootprints =
+                        _carbonCalculator.houseHoldFootprints;
+                    double foodFootprints = _carbonCalculator.foodFootprints;
+                    double recycleFootprints =
+                        _carbonCalculator.recycleFootprints;
+
+                    await storeSurveyData(
+                        questionResponses,
+                        totalCarbonFootprint,
+                        travelFootprints,
+                        houseHoldFootprints,
+                        foodFootprints,
+                        recycleFootprints);
+                    double maxCarbonFootprint = 150;
+
+                    double calculatedPercent =
+                        totalCarbonFootprint / maxCarbonFootprint;
+                    widget.onSurveyCompleted(calculatedPercent);
+
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(Icons.check),
+                ),
         ),
-        floatingActionButton: _currentPageIndex < questions.length - 1
-            ? FloatingActionButton(
-                onPressed: () {
-                  _pageController.nextPage(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Icon(Icons.arrow_forward),
-              )
-            : FloatingActionButton(
-                onPressed: () async {
-                  double totalCarbonFootprint =
-                      _carbonCalculator.calculateFootprints(questionResponses);
-                  double travelFootprints = _carbonCalculator.travelFootprints;
-                  double houseHoldFootprints =
-                      _carbonCalculator.houseHoldFootprints;
-                  double foodFootprints = _carbonCalculator.foodFootprints;
-                  double recycleFootprints =
-                      _carbonCalculator.recycleFootprints;
-
-                  await storeSurveyData(
-                      questionResponses,
-                      totalCarbonFootprint,
-                      travelFootprints,
-                      houseHoldFootprints,
-                      foodFootprints,
-                      recycleFootprints);
-                  double maxCarbonFootprint = 100.0;
-                  double calculatedPercent =
-                      totalCarbonFootprint / maxCarbonFootprint;
-                  widget.onSurveyCompleted(calculatedPercent);
-
-                  Navigator.of(context).pop();
-                },
-                child: Icon(Icons.check),
-              ),
       ),
     );
   }
@@ -238,19 +244,22 @@ class _SurveyState extends State<Survey> {
             .set(currentSurveyData);
 
         //Store historical survey data in the 'historical_data' collection
+        DateTime now = DateTime.now();
+        String date = "${now.year}-${now.month}-${now.day}";
         Map<String, dynamic> historicalSurveyData = {
+          'date': date,
           'totalCarbonFootprint': totalCarbonFootprint,
           'travelFootprints': travelFootprints,
           'houseHoldFootprints': houseHoldFootprints,
           'foodFootprints': foodFootprints,
           'recycleFootprints': recycleFootprints,
-          'timestamp': FieldValue.serverTimestamp(),
         };
+        // Use .add() to append a new document to the collection
         await FirebaseFirestore.instance
             .collection('historical_data')
             .doc(userId)
-            .set(historicalSurveyData);
-
+            .collection('carbon_footprints_history')
+            .add(historicalSurveyData);
         print('Survey data successfully stored in Firestore');
       }
     } catch (e) {

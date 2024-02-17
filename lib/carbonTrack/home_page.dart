@@ -2,6 +2,7 @@ import 'package:bearthly/carbonTrack/components/survey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/indicator.dart';
 
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _fetchUserName();
+    _loadCalculatedPercent();
 
     // Initialize the animation controller
     _animationController = AnimationController(
@@ -41,6 +43,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     // Start the animation
     _animationController.forward();
+  }
+
+  Future<void> _loadCalculatedPercent() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double? storedPercent = prefs.getDouble('calculatedPercent');
+    if (storedPercent != null) {
+      setState(() {
+        calculatedPercent = storedPercent;
+      });
+    }
   }
 
   @override
@@ -85,19 +97,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   // Function to open the survey form dialog
-  void _openSurveyForm() {
+  void _openSurveyForm() async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Survey Form'),
+          title: const Text(
+            'Carbon footprint Tracker Survey',
+            style: TextStyle(fontSize: 20),
+          ),
           // Add your survey form widget here
           content: Survey(
-            onSurveyCompleted: (percent) {
+            onSurveyCompleted: (percent) async {
               // Update the state with the calculated percent
               setState(() {
                 calculatedPercent = percent;
               });
+
+              // Store the calculated percentage in shared preferences
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setDouble('calculatedPercent', percent);
             },
             userId: FirebaseAuth.instance.currentUser?.uid ?? '',
           ),
@@ -118,9 +137,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 191, 228, 228),
-        elevation: 7, // Remove app bar shadow
+        backgroundColor: Colors.transparent,
+        elevation: 0, // Remove app bar shadow
         scrolledUnderElevation: screenHeight,
         title: Text(
           "Hello $userName",
@@ -141,16 +161,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 end: Alignment.bottomLeft,
                 stops: [0.2, 0.5, 0.8],
                 colors: [
-                  Color.fromARGB(255, 20, 137, 135),
-                  Color.fromARGB(255, 113, 189, 173),
-                  Color.fromARGB(255, 105, 192, 178),
+                  Color.fromARGB(255, 181, 227, 249),
+                  Color.fromARGB(255, 210, 224, 241),
+                  Color.fromARGB(255, 185, 234, 228),
                 ],
               ),
             ),
             child: Container(
               alignment: Alignment.topCenter,
               padding: const EdgeInsets.only(
-                  top: 40, left: 60, right: 60), // Adjust padding
+                  top: 90, left: 60, right: 60), // Adjust padding
+
               child: Indicator(
                 percent: calculatedPercent,
                 co2eKg: 0,
@@ -176,7 +197,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           // Navigate to the corresponding page when an icon is tapped
           switch (index) {
             case 0:
-              Navigator.pushReplacementNamed(context, '/home');
               break;
             case 1:
               Navigator.pushReplacementNamed(context, '/track');
