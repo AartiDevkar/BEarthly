@@ -152,16 +152,16 @@ class _ReduceState extends State<Reduce> {
           // Navigate to the corresponding page when an icon is tapped
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/home');
               break;
             case 1:
-              Navigator.pushNamed(context, '/track');
+              Navigator.pushReplacementNamed(context, '/track');
               break;
             case 2:
               // Navigator.pushNamed(context, '/reduce');
               break;
             case 3:
-              Navigator.pushNamed(context, '/connect');
+              Navigator.pushReplacementNamed(context, '/connect');
               break;
           }
         },

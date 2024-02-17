@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 class Indicator_piechart extends StatelessWidget {
   const Indicator_piechart({
-    super.key,
+    Key? key,
     required this.color,
     required this.text,
     required this.isSquare,
     this.size = 16,
     this.textColor,
-  });
+  }) : super(key: key);
+
   final Color color;
   final String text;
   final bool isSquare;
