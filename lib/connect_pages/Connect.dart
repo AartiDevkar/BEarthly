@@ -1,4 +1,4 @@
-import 'package:bearthly/connect_pages/settings.dart';
+import 'package:bearthly/connect_pages/pages/SettingsPages/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -60,12 +60,66 @@ class _ConnectState extends State<Connect> {
               imageUrl:
                   'https://im.whatshot.in/img/2020/Jun/istock-1130655067-cropped-1591265020.jpg',
               onConnect: () {
-                // Implement logic to display contact information on Connect click
+                // Modify the onConnect function to display a custom dialog with NGO information
+
                 showDialog(
                   context: context,
                   builder: (_) => AlertDialog(
-                    title: const Text('Contact Information'),
-                    content: const Text('Contact information goes here.'),
+                    title: const Text('NGO Information'),
+                    content: const Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'NGO Name',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text('Sample NGO'), // Replace with actual NGO name
+                        SizedBox(height: 8),
+                        Text(
+                          'Contact Person',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                            'John Doe'), // Replace with actual contact person name
+                        SizedBox(height: 8),
+                        Row(children: [
+                          Icon(
+                            Icons.email,
+                            size: 20.0,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text('contact@example.com'),
+                        ]),
+
+                        SizedBox(height: 8),
+                        Row(children: [
+                          Icon(
+                            Icons.phone,
+                            size: 20.0,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text('+1234567890'),
+                        ]),
+                        // Replace with actual phone number
+                        SizedBox(height: 8),
+                        Row(children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 20.0,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text('123 NGO Street, City'),
+                        ]),
+                        // Replace with actual address
+                      ],
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -79,7 +133,8 @@ class _ConnectState extends State<Connect> {
               },
               onKnowMore: () {
                 // Launch the NGO's/org's website on Know More click
-                _launchURL('https://www.greenyatra.org/');
+                _launchURL(
+                    'https://services.india.gov.in/service/detail/environmental-ngo-portal');
               },
             ),
             PostItem(
@@ -156,7 +211,8 @@ class _ConnectState extends State<Connect> {
               },
               onKnowMore: () {
                 // Launch the NGO's/org's website on Know More click
-                _launchURL('https://www.greenyatra.org/');
+                _launchURL(
+                    'https://services.india.gov.in/service/detail/environmental-ngo-portal');
               },
             ),
             PostItem(
@@ -196,13 +252,13 @@ class _ConnectState extends State<Connect> {
           // Navigate to the corresponding page when an icon is tapped
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/home');
               break;
             case 1:
-              Navigator.pushNamed(context, '/track');
+              Navigator.pushReplacementNamed(context, '/track');
               break;
             case 2:
-              Navigator.pushNamed(context, '/reduce');
+              Navigator.pushReplacementNamed(context, '/reduce');
               break;
             case 3:
               // Navigator.pushNamed(context, '/connect');
