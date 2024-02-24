@@ -1,3 +1,4 @@
+//import 'package:bearthly/carbonTrack/components/cloud_animation.dart';
 import 'package:bearthly/carbonTrack/components/survey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -161,9 +162,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 end: Alignment.bottomLeft,
                 stops: [0.2, 0.5, 0.8],
                 colors: [
-                  Color.fromARGB(255, 181, 227, 249),
-                  Color.fromARGB(255, 210, 224, 241),
-                  Color.fromARGB(255, 185, 234, 228),
+                  Color.fromARGB(255, 243, 244, 244),
+                  Color.fromARGB(255, 228, 236, 237),
+                  Color.fromARGB(255, 211, 227, 235),
                 ],
               ),
             ),
@@ -176,8 +177,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 percent: calculatedPercent,
                 co2eKg: 0,
               ),
+              // child: FitCircularWidget(heartPoints: 1800, steps: 80),
             ),
           ),
+
+          // const Positioned.fill(
+          //   child: CloudAnimation(),
+          // ),
         ],
       ),
       floatingActionButton: ScaleTransition(
@@ -186,7 +192,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           onPressed: _openSurveyForm,
           label: const Text('Take Survey'),
           icon: const Icon(Icons.assignment),
-          backgroundColor: Color.fromARGB(255, 232, 208, 135),
+          backgroundColor: Color.fromARGB(255, 141, 230, 174),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
