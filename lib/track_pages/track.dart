@@ -1,6 +1,5 @@
 import 'package:bearthly/carbonTrack/components/co2_calculator.dart';
 import 'package:flutter/material.dart';
-import 'package:bearthly/track_pages/components/bar_graph/bar_graph.dart';
 import 'package:bearthly/track_pages/components/pie_chart_components/piechart.dart';
 
 class Track extends StatefulWidget {
@@ -35,11 +34,11 @@ class _TrackState extends State<Track> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              BarGraph(
-                barGroups: const [],
-              ),
+              // BarGraph(
+              //   barGroups: const [],
+              // ),
               SizedBox(height: 20), // Add some space between charts
-              Piechart(),
+              Piechart()
             ],
           ),
         ),
