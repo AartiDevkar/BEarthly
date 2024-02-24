@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:bearthly/carbonTrack/components/co2_calculator.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -30,6 +34,15 @@ class _SurveyState extends State<Survey> {
       'options': ['Public Transport', 'Car/bike', 'Cycle/Walking'],
     },
     {
+      'question': 'How much distance you travel everyday?',
+      'options': [
+        ' less than 50km',
+        '50-100 km',
+        '100-150km',
+        'More than 150 km'
+      ],
+    },
+    {
       'question': 'How many times do you take flights per year?',
       'options': ['None', '1-2 times', '3-5 times', 'More than 5 times'],
     },
@@ -42,16 +55,16 @@ class _SurveyState extends State<Survey> {
       ],
     },
     {
+      'question': 'Do you use LED bulbs in your home?',
+      'options': ['Yes', 'No'],
+    },
+    {
       'question': 'What type of energy sources power your home?',
       'options': [
         'Solar',
         'Electricity from the grid (Utility company)',
         'Other'
       ],
-    },
-    {
-      'question': 'Do you use LED bulbs in your home?',
-      'options': ['Yes', 'No'],
     },
     {
       'question':
@@ -65,15 +78,6 @@ class _SurveyState extends State<Survey> {
         'Fish/Seafood',
         'Plant based sources(tofu,beans,lentils)',
         'Dairy Products'
-      ],
-    },
-    {
-      'question': 'How many gallons of water do you use per day on average?',
-      'options': [
-        'Less than 50 gallons',
-        '50-100 gallons',
-        '100-150 gallons',
-        'More than 150 gallons'
       ],
     },
     {
@@ -137,28 +141,34 @@ class _SurveyState extends State<Survey> {
                 )
               : FloatingActionButton(
                   onPressed: () async {
-                    double totalCarbonFootprint = _carbonCalculator
+                    List carbonFootprintData = _carbonCalculator
                         .calculateFootprints(questionResponses);
+                    double totalCarbonFootprint = carbonFootprintData[0];
 
-                    double travelFootprints =
-                        _carbonCalculator.travelFootprints;
-                    double houseHoldFootprints =
-                        _carbonCalculator.houseHoldFootprints;
-                    double foodFootprints = _carbonCalculator.foodFootprints;
-                    double recycleFootprints =
-                        _carbonCalculator.recycleFootprints;
+                    double travelFootprints = carbonFootprintData[1];
+                    double flightsFootprints = carbonFootprintData[2];
+                    double houseHoldFootprints = carbonFootprintData[3];
+                    double foodFootprints = carbonFootprintData[4];
+                    double shoppingFootprints = carbonFootprintData[5];
+                    double recycleFootprints = carbonFootprintData[6];
 
                     await storeSurveyData(
                         questionResponses,
                         totalCarbonFootprint,
                         travelFootprints,
-                        houseHoldFootprints,
+                        flightsFootprints,
+                        shoppingFootprints,
                         foodFootprints,
+                        houseHoldFootprints,
                         recycleFootprints);
-                    double maxCarbonFootprint = 150;
+                    // Update the pie chart with the new footprints
+                    setState(() {});
 
-                    double calculatedPercent =
-                        totalCarbonFootprint / maxCarbonFootprint;
+                    double clampedValue =
+                        max(0, min(100, totalCarbonFootprint));
+                    double normalizedValue = clampedValue / 100;
+
+                    double calculatedPercent = normalizedValue;
                     widget.onSurveyCompleted(calculatedPercent);
 
                     Navigator.of(context).pop();
@@ -213,6 +223,8 @@ class _SurveyState extends State<Survey> {
       List<String?> questionResponses,
       double totalCarbonFootprint,
       double travelFootprints,
+      double flightsFootprints,
+      double shoppingFootprints,
       double houseHoldFootprints,
       double foodFootprints,
       double recycleFootprints) async {
@@ -226,14 +238,12 @@ class _SurveyState extends State<Survey> {
         Map<String, dynamic> currentSurveyData = {
           'transport': getOptionText(0, questionResponses),
           'flights_year': getOptionText(1, questionResponses),
-          'shopping_mode': getOptionText(2, questionResponses),
-          'energy_source_home': getOptionText(3, questionResponses),
-          'LED_bulbs': getOptionText(4, questionResponses),
+          'distance_traveled': getOptionText(2, questionResponses),
+          'shopping_mode': getOptionText(3, questionResponses),
+          'energy_source_home': getOptionText(4, questionResponses),
           'energy_intensive_appliances': getOptionText(5, questionResponses),
           'protein_source': getOptionText(6, questionResponses),
-          'water_usage': getOptionText(7, questionResponses),
-          'recycle_waste': getOptionText(8, questionResponses),
-          'E-waste_recycle': getOptionText(9, questionResponses),
+          'E-waste_recycle': getOptionText(7, questionResponses),
           'carbonFootprint': totalCarbonFootprint,
           'timestamp': FieldValue.serverTimestamp(),
         };
@@ -250,10 +260,17 @@ class _SurveyState extends State<Survey> {
           'date': date,
           'totalCarbonFootprint': totalCarbonFootprint,
           'travelFootprints': travelFootprints,
+          'flights': flightsFootprints,
+          'shopping': shoppingFootprints,
           'houseHoldFootprints': houseHoldFootprints,
           'foodFootprints': foodFootprints,
           'recycleFootprints': recycleFootprints,
         };
+        await FirebaseFirestore.instance
+            .collection('FootprintsData')
+            .doc(userId)
+            .set(historicalSurveyData);
+        print("Pie chart data stored successfully");
         // Use .add() to append a new document to the collection
         await FirebaseFirestore.instance
             .collection('historical_data')
