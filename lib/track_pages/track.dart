@@ -1,4 +1,3 @@
-import 'package:bearthly/carbonTrack/components/co2_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:bearthly/track_pages/components/pie_chart_components/piechart.dart';
 
@@ -11,16 +10,6 @@ class Track extends StatefulWidget {
 
 class _TrackState extends State<Track> {
   int currentIndex = 1;
-  late CarbonCalculator carbonCalculator;
-
-  @override
-  void initState() {
-    super.initState();
-    carbonCalculator = CarbonCalculator(context);
-    carbonCalculator.retrieveAnswers().then((_) {
-      setState(() {});
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
