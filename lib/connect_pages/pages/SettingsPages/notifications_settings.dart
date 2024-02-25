@@ -1,3 +1,4 @@
+import 'package:bearthly/notifications/local_notifications.dart';
 import 'package:flutter/material.dart';
 
 class NotificationSettingsPage extends StatefulWidget {
@@ -12,9 +13,16 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
   bool _allowNotifications = false;
 
   void _updateNotificationPermission(bool newValue) {
-    // Update the user's notification permission here
-    // For demonstration purposes, just print the new value
-    print('Notification permission updated: $newValue');
+    if (newValue = true) {
+      LocalNotifications.showPeriodicNotifications(
+          title: 'BEarthly',
+          body: 'Review your carbon footprints',
+          payload: 'data');
+      print('Notification permission updated: $newValue');
+    } else {
+      LocalNotifications.close();
+    }
+
     setState(() {
       _allowNotifications = newValue;
     });

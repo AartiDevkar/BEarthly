@@ -1,6 +1,8 @@
 import 'package:bearthly/carbonTrack/home_page.dart';
 import 'package:bearthly/connect_pages/Connect.dart';
 import 'package:bearthly/intro_pages/onboarding_screens.dart';
+import 'package:bearthly/notifications/firebase_api.dart';
+import 'package:bearthly/notifications/local_notifications.dart';
 import 'package:bearthly/track_pages/track.dart';
 import 'package:bearthly/reduce_pages/reduce.dart';
 import 'package:bearthly/sign_up_pages/pages/login_page.dart';
@@ -12,6 +14,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  await FirebaseApi().initNotifications();
+  await LocalNotifications.init();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool onboardingShown = prefs.getBool('onboardingShown') ?? true;
 

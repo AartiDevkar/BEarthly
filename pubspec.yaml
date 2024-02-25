@@ -67,6 +67,12 @@ dependencies:
   firebase_database: ^10.4.5
   image_picker: ^1.0.7
   flutter_custom_tabs: ^2.0.0+1
+  
+  firebase_messaging: ^14.7.16
+  flutter_local_notifications: ^16.3.2
+  flutter_timezone: ^1.0.8
+  rxdart: ^0.27.7
+  
  
   
  
