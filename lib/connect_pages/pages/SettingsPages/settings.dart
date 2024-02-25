@@ -1,4 +1,3 @@
-import 'package:bearthly/connect_pages/pages/SettingsPages/action_history.dart';
 import 'package:bearthly/connect_pages/pages/SettingsPages/feedback.dart';
 import 'package:bearthly/connect_pages/pages/SettingsPages/notifications_settings.dart';
 import 'package:bearthly/connect_pages/pages/SettingsPages/privacy_security.dart';
@@ -126,19 +125,19 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             const SizedBox(height: 16.0),
-            TextButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ActionHistory()));
-              },
-              child: const Row(
-                children: [
-                  Icon(Icons.history),
-                  SizedBox(width: 8.0),
-                  Text('Action History'),
-                ],
-              ),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => ActionHistory()));
+            //   },
+            //   child: const Row(
+            //     children: [
+            //       Icon(Icons.history),
+            //       SizedBox(width: 8.0),
+            //       Text('Action History'),
+            //     ],
+            //   ),
+            // ),
             TextButton(
               onPressed: () {
                 Navigator.push(

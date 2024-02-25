@@ -158,7 +158,7 @@ class PostItem extends StatelessWidget {
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
-                width: 160,
+                width: 135,
               ),
               PopupMenuButton<String>(
                 icon: const Icon(Icons.more_vert),

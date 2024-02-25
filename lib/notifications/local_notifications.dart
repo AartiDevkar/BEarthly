@@ -6,7 +6,7 @@ class LocalNotifications {
   static Future init() async {
     // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/planet');
     final DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
             onDidReceiveLocalNotification: (id, title, body, payload) => null);
@@ -54,7 +54,7 @@ class LocalNotifications {
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await _flutterLocalNotificationsPlugin.periodicallyShow(
-        1, title, body, RepeatInterval.daily, notificationDetails);
+        1, title, body, RepeatInterval.everyMinute, notificationDetails);
   }
 
   //close the notification

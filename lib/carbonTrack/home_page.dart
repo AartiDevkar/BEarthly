@@ -64,32 +64,52 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> _fetchUserName() async {
     try {
-      // Get the current user ID from FirebaseAuth
-      String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+      // Get the current user from FirebaseAuth
+      User? user = FirebaseAuth.instance.currentUser;
 
-      // Check if the user ID is not empty
-      if (userId.isNotEmpty) {
-        // Reference to the Firestore collection for user data
-        DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseFirestore
-            .instance
-            .collection('users')
-            .doc(userId)
-            .get();
+      // Check if the user is not null and signed in with Google
+      if (user != null &&
+          user.providerData
+              .any((userInfo) => userInfo.providerId == 'google.com')) {
+        // Extract email address
+        String email = user.email ?? '';
 
-        // Check if the document exists before accessing its fields
-        if (userDoc.exists) {
-          // Retrieve the username from the document
-          String fetchedUserName = userDoc.get('username') ?? 'Unknown';
+        // Extract username from email, avoiding the ".gmail.com" part
+        String fetchedUserName =
+            email.split('@').first.replaceAll('.gmail', '');
 
-          // Update the state with the fetched username
-          setState(() {
-            userName = fetchedUserName;
-          });
-        } else {
-          // Handle the case when the document does not exist
-          setState(() {
-            userName = 'Unknown';
-          });
+        // Update the state with the fetched username
+        setState(() {
+          userName = fetchedUserName;
+        });
+      } else {
+        // Get the current user ID from FirebaseAuth
+        String userId = user?.uid ?? '';
+
+        // Check if the user ID is not empty
+        if (userId.isNotEmpty) {
+          // Reference to the Firestore collection for user data
+          DocumentSnapshot<Map<String, dynamic>> userDoc =
+              await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(userId)
+                  .get();
+
+          // Check if the document exists before accessing its fields
+          if (userDoc.exists) {
+            // Retrieve the username from the document
+            String fetchedUserName = userDoc.get('username') ?? 'Unknown';
+
+            // Update the state with the fetched username
+            setState(() {
+              userName = fetchedUserName;
+            });
+          } else {
+            // Handle the case when the document does not exist
+            setState(() {
+              userName = 'Unknown';
+            });
+          }
         }
       }
     } catch (e) {
