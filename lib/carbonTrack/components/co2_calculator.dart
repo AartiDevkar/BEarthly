@@ -140,13 +140,15 @@ class CarbonCalculator {
     print(flightsIndex);
 
     if (flightsIndex == 0) {
-      // None
+      getEmissionValue(questionResponses[2]?.toString() ?? '1', 2);
+      print(flightsIndex);
+
       flightsFootprints = 0.0;
     } else if (flightsIndex == 1) {
       // 1-2 times
       flightsFootprints =
           getEmissionValue(questionResponses[2]?.toString() ?? '1', 2) *
-              500; // Assuming average distance of 500 km per flight
+              100; // Assuming average distance of 50 km per flight
       print(getEmissionValue(questionResponses[2]?.toString() ?? '1', 2));
     } else if (flightsIndex == 2) {
       // 3-5 times
@@ -156,7 +158,7 @@ class CarbonCalculator {
     } else if (flightsIndex == 3) {
       // More than 5 times
       flightsFootprints = getEmissionValue('3', 2) *
-          500; // Assuming average distance of 500 km per flight
+          800; // Assuming average distance of 500 km per flight
       print(getEmissionValue('3', 2));
     }
 

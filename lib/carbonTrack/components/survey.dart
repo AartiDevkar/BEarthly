@@ -94,8 +94,6 @@ class _SurveyState extends State<Survey> {
       ],
     },
   ];
-  CollectionReference surveyCollection =
-      FirebaseFirestore.instance.collection('Survey');
 
   @override
   void initState() {
@@ -153,6 +151,9 @@ class _SurveyState extends State<Survey> {
                     double recycleFootprints = carbonFootprintData[6];
 
                     await storeSurveyData(
+                        questionResponses, totalCarbonFootprint);
+
+                    await storeFootprintsData(
                         questionResponses,
                         totalCarbonFootprint,
                         travelFootprints,
@@ -161,6 +162,7 @@ class _SurveyState extends State<Survey> {
                         foodFootprints,
                         houseHoldFootprints,
                         recycleFootprints);
+
                     // Update the pie chart with the new footprints
                     setState(() {});
 
@@ -219,15 +221,13 @@ class _SurveyState extends State<Survey> {
     );
   }
 
+  CollectionReference surveyCollection =
+      FirebaseFirestore.instance.collection('Survey');
+
   Future<void> storeSurveyData(
-      List<String?> questionResponses,
-      double totalCarbonFootprint,
-      double travelFootprints,
-      double flightsFootprints,
-      double shoppingFootprints,
-      double houseHoldFootprints,
-      double foodFootprints,
-      double recycleFootprints) async {
+    List<String?> questionResponses,
+    double totalCarbonFootprint,
+  ) async {
     try {
       User? currentUser = FirebaseAuth.instance.currentUser;
 
@@ -247,13 +247,69 @@ class _SurveyState extends State<Survey> {
           'carbonFootprint': totalCarbonFootprint,
           'timestamp': FieldValue.serverTimestamp(),
         };
-
         await FirebaseFirestore.instance
             .collection('Survey')
             .doc(userId)
             .set(currentSurveyData);
+      }
+    } catch (e) {
+// ignore: avoid_print
+      print('Error storing survey data: $e');
+    }
+  }
 
-        //Store historical survey data in the 'historical_data' collection
+  Future<void> storeFootprintsData(
+      List<String?> footprintsData,
+      double totalCarbonFootprint,
+      double travelFootprints,
+      double flightsFootprints,
+      double shoppingFootprints,
+      double houseHoldFootprints,
+      double foodFootprints,
+      double recycleFootprints) async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser != null &&
+          currentUser.email != null &&
+          currentUser.email!.isNotEmpty) {
+        String userId = currentUser.email!;
+        Map<String, dynamic> FootprintsData = {
+          'travelFootprints': travelFootprints,
+          'flights': flightsFootprints,
+          'shopping': shoppingFootprints,
+          'houseHoldFootprints': houseHoldFootprints,
+          'foodFootprints': foodFootprints,
+          'recycleFootprints': recycleFootprints,
+          'totalCarbonFootprint': totalCarbonFootprint,
+        };
+        await FirebaseFirestore.instance
+            .collection('FootprintsData')
+            .doc(userId)
+            .set(FootprintsData);
+        print("Footprints  data stored successfully");
+      }
+    } catch (e) {
+      print('Error storing Footprints  data: $e');
+    }
+  }
+
+  Future<void> storeHistoricalData(
+      List<String?> historicalData,
+      double totalCarbonFootprint,
+      double travelFootprints,
+      double flightsFootprints,
+      double shoppingFootprints,
+      double houseHoldFootprints,
+      double foodFootprints,
+      double recycleFootprints) async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser != null &&
+          currentUser.email != null &&
+          currentUser.email!.isNotEmpty) {
+        String userId = currentUser.email!;
         DateTime now = DateTime.now();
         String date = "${now.year}-${now.month}-${now.day}";
         Map<String, dynamic> historicalSurveyData = {
@@ -264,24 +320,20 @@ class _SurveyState extends State<Survey> {
           'shopping': shoppingFootprints,
           'houseHoldFootprints': houseHoldFootprints,
           'foodFootprints': foodFootprints,
-          'recycleFootprints': recycleFootprints,
+          'recycleFootprints': recycleFootprints
         };
-        await FirebaseFirestore.instance
-            .collection('FootprintsData')
-            .doc(userId)
-            .set(historicalSurveyData);
-        print("Pie chart data stored successfully");
-        // Use .add() to append a new document to the collection
+
+        //Store historical survey data in the 'historical_data' collectio
         await FirebaseFirestore.instance
             .collection('historical_data')
             .doc(userId)
-            .collection('carbon_footprints_history')
-            .add(historicalSurveyData);
-        print('Survey data successfully stored in Firestore');
+            .set(historicalSurveyData);
+        print("Historical data stored successfully");
+        // Use .add() to append a new document to the collection
       }
     } catch (e) {
 // ignore: avoid_print
-      print('Error storing survey data: $e');
+      print('Error storing Footprints and historical  data: $e');
     }
   }
 
