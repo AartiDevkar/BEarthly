@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Survey extends StatefulWidget {
-  final void Function(double) onSurveyCompleted;
+  final void Function(double, double) onSurveyCompleted;
 
   const Survey(
       {Key? key, required this.onSurveyCompleted, required String userId})
@@ -171,7 +171,8 @@ class _SurveyState extends State<Survey> {
                     double normalizedValue = clampedValue / 100;
 
                     double calculatedPercent = normalizedValue;
-                    widget.onSurveyCompleted(calculatedPercent);
+                    widget.onSurveyCompleted(
+                        calculatedPercent, totalCarbonFootprint);
 
                     Navigator.of(context).pop();
                   },

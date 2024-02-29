@@ -1,6 +1,8 @@
 import 'package:bearthly/connect_pages/data/ngos_data.dart';
 import 'package:bearthly/connect_pages/data/ngos_model.dart';
 import 'package:bearthly/connect_pages/pages/SettingsPages/settings.dart';
+import 'package:bearthly/newsApi/newsPage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as customTabs;
 
@@ -48,27 +50,39 @@ class _ConnectState extends State<Connect> {
           // ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: ListView.builder(
-          itemCount: ngos.length,
-          itemBuilder: (BuildContext context, int index) {
-            return PostItem(
-              ngo: ngos[index],
-              onConnect: () {
-                showDialog(
-                  context: context,
-                  builder: (_) => NgoInfoDialog(
-                    ngo: ngos[index],
-                  ),
-                );
-              },
-              onKnowMore: () {
-                _launchURL(ngos[index].websiteUrl);
-              },
-            );
-          },
-        ),
+      body: ListView(
+        children: [
+          ElevatedButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EnvironmentArticlesPage(),
+              ),
+            ),
+            child: const Text('NEWS'),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: ngos.length,
+            itemBuilder: (BuildContext context, int index) {
+              return PostItem(
+                ngo: ngos[index],
+                onConnect: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => NgoInfoDialog(
+                      ngo: ngos[index],
+                    ),
+                  );
+                },
+                onKnowMore: () {
+                  _launchURL(ngos[index].websiteUrl);
+                },
+              );
+            },
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
