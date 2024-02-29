@@ -54,7 +54,7 @@ class LocalNotifications {
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await _flutterLocalNotificationsPlugin.periodicallyShow(
-        1, title, body, RepeatInterval.everyMinute, notificationDetails);
+        1, title, body, RepeatInterval.daily, notificationDetails);
   }
 
   //close the notification
