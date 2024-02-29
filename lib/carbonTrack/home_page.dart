@@ -1,4 +1,5 @@
 //import 'package:bearthly/carbonTrack/components/cloud_animation.dart';
+import 'package:bearthly/carbonTrack/components/aqiPage.dart';
 import 'package:bearthly/carbonTrack/components/survey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int currentIndex = 0;
   double calculatedPercent = 0.0;
+  double co2e = 0.0;
 
   String userName = '';
 
@@ -129,10 +131,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
           // Add your survey form widget here
           content: Survey(
-            onSurveyCompleted: (percent) async {
+            onSurveyCompleted: (percent, totalCarbonFootprint) async {
               // Update the state with the calculated percent
               setState(() {
                 calculatedPercent = percent;
+                co2e = totalCarbonFootprint;
               });
 
               // Store the calculated percentage in shared preferences
@@ -183,8 +186,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 stops: [0.2, 0.5, 0.8],
                 colors: [
                   Color.fromARGB(255, 243, 244, 244),
-                  Color.fromARGB(255, 228, 236, 237),
-                  Color.fromARGB(255, 211, 227, 235),
+                  Color.fromARGB(255, 255, 255, 255),
+                  Color.fromARGB(255, 255, 255, 255),
                 ],
               ),
             ),
@@ -195,9 +198,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
               child: Indicator(
                 percent: calculatedPercent,
-                co2eKg: 0,
               ),
               // child: FitCircularWidget(heartPoints: 1800, steps: 80),
+            ),
+          ),
+          const SizedBox(
+            height: 200,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 420, left: 115, right: 60),
+            child: Container(
+              height: 90,
+              width: 150,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(147, 94, 129, 123),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: ElevatedButton.icon(
+                onPressed: (() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AirQualityPage()),
+                  );
+                }),
+                icon: Icon(Icons.air),
+                label: Text('AQI'),
+              ),
             ),
           ),
 
