@@ -45,9 +45,7 @@ class _AnimatedReduceCardState extends State<AnimatedReduceCard>
     return SlideTransition(
       position: _offsetAnimation,
       child: GestureDetector(
-        onTap: () {
-          // Handle card tap if needed
-        },
+        onTap: () {},
         child: Card(
           margin: const EdgeInsets.all(16),
           elevation: 4,

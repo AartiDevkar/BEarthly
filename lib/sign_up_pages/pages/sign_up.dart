@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatefulWidget {
-  const Signup({super.key});
+  const Signup({Key? key}) : super(key: key);
 
   @override
   State<Signup> createState() => _SignupState();
@@ -54,7 +54,7 @@ class _SignupState extends State<Signup> {
         // Store the authenticated user in the _user variable
         _user = userCredential.user;
 
-        if (_user != null) {
+        if (_user != null && _user!.emailVerified) {
           // Now, you can store the user's name separately
           String username = nameController.text;
 
@@ -69,14 +69,39 @@ class _SignupState extends State<Signup> {
           );
         }
       } catch (e) {
-        if (kDebugMode) {
-          print("Sign Up error: $e");
+        if (e is FirebaseAuthException) {
+          // Handle specific Firebase Auth exceptions
+          if (e.code == 'email-already-in-use') {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                    "The email address is already in use by another account."),
+              ),
+            );
+            if (!_user!.emailVerified) {
+              await _user!.sendEmailVerification();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                      "A verification email has been sent to ${_user!.email}. Please verify your email before signing in.")));
+              Navigator.pop(context);
+            }
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Sign Up error: ${e.message}"),
+              ),
+            );
+          }
+        } else {
+          if (kDebugMode) {
+            print("Sign Up error: $e");
+          }
         }
       }
     }
   }
 
-// Function to create a user document in Firestore
+  // Function to create a user document in Firestore
   void createUserDocument(String uid, String email, String username) {
     FirebaseFirestore.instance.collection('users').doc(uid).set({
       'email': email,

@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Reduce extends StatefulWidget {
   const Reduce({Key? key}) : super(key: key);
@@ -9,12 +12,25 @@ class Reduce extends StatefulWidget {
 
 class _ReduceState extends State<Reduce> {
   int currentIndex = 2; // Set initial index to 2 for Reduce page
+
   double totalCarbonFootprint = 0.0;
+  double calculatedPercent = 0.0;
 
   @override
   void initState() {
     super.initState();
     _initializeData();
+    _loadCalculatedPercent();
+  }
+
+  Future<void> _loadCalculatedPercent() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double? storedPercent = prefs.getDouble('calculatedPercent');
+    if (storedPercent != null) {
+      setState(() {
+        calculatedPercent = storedPercent;
+      });
+    }
   }
 
   Future<void> _initializeData() async {
@@ -23,12 +39,14 @@ class _ReduceState extends State<Reduce> {
 
     // Simulate total carbon footprint calculation
     setState(() {
-      totalCarbonFootprint = 25.0; // Replace with actual calculation
+      totalCarbonFootprint =
+          calculatedPercent; // Replace with actual calculation
     });
+    print('Total carbon for reduce page $totalCarbonFootprint');
   }
 
   List<ReduceSection> getSections(double carbonFootprint) {
-    if (carbonFootprint < 20) {
+    if (carbonFootprint >= 0.20) {
       // High carbon footprint, show suggestions for reducing it
       return [
         ReduceSection(
@@ -56,7 +74,7 @@ class _ReduceState extends State<Reduce> {
         ),
         // Add more suggestions for high carbon footprint
       ];
-    } else if (carbonFootprint > 20) {
+    } else if (carbonFootprint >= 0.40) {
       return [
         ReduceSection(
           description: 'Walk or bike for short trips instead of driving.',
@@ -83,7 +101,7 @@ class _ReduceState extends State<Reduce> {
         ),
         // Add more suggestions for medium carbon footprint
       ];
-    } else if (carbonFootprint > 40) {
+    } else if (carbonFootprint >= 70) {
       return [
         ReduceSection(
           description:
@@ -235,11 +253,36 @@ class _AnimatedReduceCardState extends State<AnimatedReduceCard>
     _controller.forward();
   }
 
+  void saveLogToFirebase(bool isLiked) {
+    String? currentUser = FirebaseAuth.instance.currentUser!.email;
+
+    if (currentUser != null) {
+      // Get current timestamp
+      Timestamp timestamp = Timestamp.now();
+
+      // Add log to Firebase with user ID
+      FirebaseFirestore.instance.collection('liked_logs').add({
+        'timestamp': timestamp,
+        'is_liked': isLiked,
+        'user': currentUser,
+
+        // You can add more data if needed
+      }).then((value) {
+        print('Log saved successfully');
+      }).catchError((error) {
+        print('Failed to save log: $error');
+      });
+    }
+  }
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+
+  Color _buttonColor = Colors.white; // Define initial color
+  bool _isLiked = false; // Track whether button is liked or not
 
   @override
   Widget build(BuildContext context) {
@@ -282,11 +325,24 @@ class _AnimatedReduceCardState extends State<AnimatedReduceCard>
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.thumb_up, color: Colors.white),
+                      icon: Icon(Icons.thumb_up, color: _buttonColor),
                       onPressed: () {
-                        // Handle thumb button press
+                        setState(() {
+                          if (_isLiked) {
+                            _buttonColor = Colors
+                                .white; // Revert to white if already liked
+                          } else {
+                            _buttonColor = Color.fromARGB(255, 126, 183,
+                                65); // Change to blue if not liked
+                          }
+                          _isLiked = !_isLiked; // Toggle like status
+                        });
+
+                        // Save log in Firebase
+                        saveLogToFirebase(_isLiked);
                       },
                     ),
+
                     SizedBox(width: 8),
                     // ElevatedButton(
                     //   onPressed: () {

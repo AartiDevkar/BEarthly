@@ -22,7 +22,7 @@ class _MyTextFieldState extends State<MyTextField> {
     return TextFormField(
       autovalidateMode:
           AutovalidateMode.onUserInteraction, // Auto-validate on interaction
-      validator: (val) => val!.isEmpty ? 'Enter your email' : null,
+      validator: (val) => val!.isEmpty ? 'Enter your username' : null,
       controller: widget.controller,
       obscureText: widget.obscureText,
       decoration: InputDecoration(
