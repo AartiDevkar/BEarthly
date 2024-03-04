@@ -183,7 +183,7 @@ class PiechartState extends State<Piechart> {
           return PieChartSectionData(
             color: Color.fromRGBO(77, 209, 163, 1),
             value: travel,
-            title: 'Travel',
+            title: '${(travel).toStringAsFixed(2)}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -196,7 +196,7 @@ class PiechartState extends State<Piechart> {
           return PieChartSectionData(
             color: Color.fromARGB(255, 142, 225, 126),
             value: food,
-            title: 'Food',
+            title: '${(food).toStringAsFixed(2)}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -209,7 +209,7 @@ class PiechartState extends State<Piechart> {
           return PieChartSectionData(
             color: Color.fromARGB(255, 101, 155, 199),
             value: energy,
-            title: 'Energy',
+            title: '${(energy).toStringAsFixed(2)}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -222,7 +222,7 @@ class PiechartState extends State<Piechart> {
           return PieChartSectionData(
             color: Color.fromARGB(255, 150, 182, 231),
             value: other,
-            title: 'Other',
+            title: '${(other).toStringAsFixed(2)}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,

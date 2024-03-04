@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 class _BarChart extends StatefulWidget {
   const _BarChart();
@@ -12,32 +9,7 @@ class _BarChart extends StatefulWidget {
 }
 
 class _BarChartState extends State<_BarChart> {
-  late DatabaseReference _databaseReference;
   late List<BarChartGroupData> showingBarGroups;
-
-  @override
-  void initState() {
-    super.initState();
-    // ignore: deprecated_member_use
-    _databaseReference = FirebaseDatabase.instance.reference();
-    fetchHistoricalDataForToday();
-  }
-
-  void fetchHistoricalDataForToday() {
-    String todayDate = DateTime.now().toString(); // Format date as desired
-    _databaseReference
-        .child('historical_data')
-        .child(todayDate)
-        .once()
-        .then((DataSnapshot snapshot) {
-          // Process the retrieved data
-          List<BarChartGroupData> barGroups =
-              []; // Initialize with retrieved data
-          setState(() {
-            showingBarGroups = barGroups;
-          });
-        } as FutureOr Function(DatabaseEvent value));
-  }
 
   @override
   Widget build(BuildContext context) {
