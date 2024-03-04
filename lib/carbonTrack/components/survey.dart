@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:bearthly/carbonTrack/components/co2_calculator.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -73,12 +72,7 @@ class _SurveyState extends State<Survey> {
     },
     {
       'question': 'What is your primary source of protein?',
-      'options': [
-        'Meat',
-        'Fish/Seafood',
-        'Plant based sources(tofu,beans,lentils)',
-        'Dairy Products'
-      ],
+      'options': ['Heavy meat eater', 'Low meat eater', 'Vegetarian', 'Vegan'],
     },
     {
       'question': 'How often do you recycle paper, plastic, and glass?',
@@ -238,13 +232,15 @@ class _SurveyState extends State<Survey> {
         String userId = currentUser.email!;
         Map<String, dynamic> currentSurveyData = {
           'transport': getOptionText(0, questionResponses),
-          'flights_year': getOptionText(1, questionResponses),
-          'distance_traveled': getOptionText(2, questionResponses),
+          'distance_traveled': getOptionText(1, questionResponses),
+          'flights_year': getOptionText(2, questionResponses),
           'shopping_mode': getOptionText(3, questionResponses),
-          'energy_source_home': getOptionText(4, questionResponses),
-          'energy_intensive_appliances': getOptionText(5, questionResponses),
-          'protein_source': getOptionText(6, questionResponses),
-          'E-waste_recycle': getOptionText(7, questionResponses),
+          'led_use': getOptionText(4, questionResponses),
+          'energy_source_home': getOptionText(5, questionResponses),
+          'energy_intensive_appliances': getOptionText(6, questionResponses),
+          'protein_source': getOptionText(7, questionResponses),
+          'waste_recycle': getOptionText(8, questionResponses),
+          'E-waste_recycle': getOptionText(9, questionResponses),
           'carbonFootprint': totalCarbonFootprint,
           'timestamp': FieldValue.serverTimestamp(),
         };
