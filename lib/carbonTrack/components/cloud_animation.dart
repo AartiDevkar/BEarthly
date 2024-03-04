@@ -49,7 +49,8 @@ class CloudPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.white.withOpacity(0.5);
+    final paint = Paint()
+      ..color = Color.fromARGB(255, 170, 162, 162).withOpacity(0.5);
     final path = Path();
     final cloudRadius = 30.0;
     final cloudSpacing = 80.0;
