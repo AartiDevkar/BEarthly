@@ -53,17 +53,28 @@ class _ConnectState extends State<Connect> {
       body: ListView(
         children: [
           ElevatedButton(
+            style: const ButtonStyle(
+              backgroundColor:
+                  MaterialStatePropertyAll(Color.fromARGB(255, 206, 242, 232)),
+            ),
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => EnvironmentArticlesPage(),
               ),
             ),
-            child: const Text('NEWS'),
+            child: const Text(
+              'Lets read whats new going on in world',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: Color.fromARGB(255, 8, 68, 55),
+              ),
+            ),
           ),
           ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: ngos.length,
             itemBuilder: (BuildContext context, int index) {
               return PostItem(
@@ -166,13 +177,15 @@ class PostItem extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              Text(
-                ngo.ngoName,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                width: 135,
+              SizedBox(
+                width: 300,
+                child: Text(
+                  ngo.ngoName,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 8, 68, 55),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800),
+                ),
               ),
               PopupMenuButton<String>(
                 icon: const Icon(Icons.more_vert),
@@ -208,19 +221,23 @@ class NgoInfoDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: const Color.fromARGB(255, 133, 231, 184),
       title: const Text('NGO Information'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'NGO Name: ${ngo.ngoName}',
-            style: const TextStyle(fontWeight: FontWeight.bold),
+          Flexible(
+            child: Text(
+              'NGO Name: ${ngo.ngoName}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
+
           const SizedBox(
             height: 10,
           ),
-          Text('Contact Person: ${ngo.contactPerson}'),
+
           Row(children: [
             const Icon(
               Icons.email,
@@ -232,16 +249,7 @@ class NgoInfoDialog extends StatelessWidget {
             Text(' ${ngo.email}'),
           ]),
           const SizedBox(height: 8),
-          Row(children: [
-            const Icon(
-              Icons.phone,
-              size: 20.0,
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Text(' ${ngo.phoneNumber}'),
-          ]),
+
           // Replace with actual phone number
           const SizedBox(height: 8),
           Row(children: [
@@ -252,7 +260,7 @@ class NgoInfoDialog extends StatelessWidget {
             const SizedBox(
               width: 20,
             ),
-            Text('${ngo.address}'),
+            Flexible(child: Text('${ngo.address}')),
           ]),
         ],
       ),

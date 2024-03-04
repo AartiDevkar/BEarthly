@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as customTabs;
+
 class EnvironmentArticlesPage extends StatefulWidget {
   @override
   _EnvironmentArticlesPageState createState() =>
@@ -55,6 +57,7 @@ class _EnvironmentArticlesPageState extends State<EnvironmentArticlesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 191, 228, 228),
         title: Text('Environment Articles'),
       ),
       body: isLoading
@@ -84,64 +87,26 @@ class _EnvironmentArticlesPageState extends State<EnvironmentArticlesPage> {
                               itemCount: articles.length,
                               itemBuilder: (context, index) {
                                 final article = articles[index];
-                                final thumbnailUrl = article['thumbnail'];
                                 return GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ArticleDetailsPage(
-                                                article: article),
-                                      ),
-                                    );
+                                    _launchURL(article['webUrl']);
                                   },
                                   child: Container(
                                     width: 250,
                                     margin: EdgeInsets.symmetric(horizontal: 8),
-                                    child: Stack(
-                                      children: [
-                                        if (thumbnailUrl != null &&
-                                            thumbnailUrl.isNotEmpty)
-                                          Image.network(
-                                            thumbnailUrl,
-                                            height: 200,
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        if (thumbnailUrl == null ||
-                                            thumbnailUrl.isEmpty)
-                                          Container(
-                                            color: Colors.grey,
-                                            height: 200,
-                                            width: double.infinity,
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.image,
-                                                color: Colors.white,
-                                                size: 40,
-                                              ),
-                                            ),
-                                          ),
-                                        Positioned(
-                                          bottom: 0,
-                                          left: 0,
-                                          right: 0,
-                                          child: Container(
-                                            padding: EdgeInsets.all(8),
-                                            color: Colors.black54,
-                                            child: Text(
-                                              article['webTitle'],
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 97, 188, 123),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        article['webTitle'],
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 );
@@ -165,64 +130,36 @@ class _EnvironmentArticlesPageState extends State<EnvironmentArticlesPage> {
                             itemCount: articles.length,
                             itemBuilder: (context, index) {
                               final article = articles[index];
-                              final thumbnailUrl = article['thumbnail'];
                               return GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ArticleDetailsPage(article: article),
-                                    ),
-                                  );
+                                  _launchURL(article['webUrl']);
                                 },
                                 child: Card(
                                   elevation: 8,
                                   margin: EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      if (thumbnailUrl != null &&
-                                          thumbnailUrl.isNotEmpty)
-                                        Image.network(
-                                          thumbnailUrl,
-                                          height: 200,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      if (thumbnailUrl == null ||
-                                          thumbnailUrl.isEmpty)
-                                        SizedBox(
-                                          height: 200,
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.image,
-                                              size: 40,
-                                            ),
-                                          ),
-                                        ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Text(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
                                           article['webTitle'],
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16.0),
-                                        child: Text(
+                                        SizedBox(height: 8),
+                                        Text(
                                           article['webPublicationDate'],
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey,
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -233,69 +170,13 @@ class _EnvironmentArticlesPageState extends State<EnvironmentArticlesPage> {
                     ),
     );
   }
-}
 
-class ArticleDetailsPage extends StatelessWidget {
-  final dynamic article;
-
-  const ArticleDetailsPage({Key? key, required this.article}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final thumbnailUrl = article['thumbnail'];
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(article['webTitle']),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (thumbnailUrl != null && thumbnailUrl.isNotEmpty)
-                Image.network(
-                  thumbnailUrl,
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
-              SizedBox(height: 16),
-              Text(
-                article['webPublicationDate'],
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey,
-                ),
-              ),
-              SizedBox(height: 16),
-              Text(
-                article['webTitle'],
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16),
-              if (article['fields'] != null &&
-                  article['fields']['body'] != null)
-                Text(
-                  article['fields']['body'],
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                )
-              else
-                Text(
-                  'No article content available',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
+  Future<void> _launchURL(String url) async {
+    Uri uri = Uri.parse(url);
+    try {
+      await customTabs.launchUrl(uri);
+    } catch (e) {
+      print('Error launching URL: $e');
+    }
   }
 }

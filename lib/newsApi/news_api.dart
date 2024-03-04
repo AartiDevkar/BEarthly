@@ -7,7 +7,7 @@ const String baseUrl = 'https://content.guardianapis.com';
 
 // Construct API request URL with query parameters
 const String apiUrl =
-    '$baseUrl/search?q=environment&api-key=b126f04a-4f03-4739-ae31-d92fc5bbfcc0';
+    '$baseUrl/search?tag=environment/recycling|environment|plastic|nature|climatechange&api-key=b126f04a-4f03-4739-ae31-d92fc5bbfcc0';
 
 Future<void> fetchEnvironmentContent() async {
   try {
