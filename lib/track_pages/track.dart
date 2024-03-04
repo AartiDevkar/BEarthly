@@ -1,3 +1,4 @@
+import 'package:bearthly/track_pages/goal_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bearthly/track_pages/components/pie_chart_components/piechart.dart';
 
@@ -23,10 +24,15 @@ class _TrackState extends State<Track> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              SizedBox(
+                height: 5,
+              ),
               // BarGraph(
               //   barGroups: const [],
               // ),
-              SizedBox(height: 20), // Add some space between charts
+              CarbonReductionGoalWidget(),
+
+              SizedBox(height: 30), // Add some space between charts
               Piechart()
             ],
           ),
