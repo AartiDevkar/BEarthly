@@ -1,5 +1,6 @@
 //import 'package:bearthly/carbonTrack/components/cloud_animation.dart';
 import 'package:bearthly/carbonTrack/components/aqiPage.dart';
+
 import 'package:bearthly/carbonTrack/components/survey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -166,12 +167,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         backgroundColor: Colors.transparent,
         elevation: 0, // Remove app bar shadow
         scrolledUnderElevation: screenHeight,
-        title: Text(
-          "Hello $userName",
-          style: const TextStyle(
-            fontSize: 18,
-            color: Color.fromARGB(255, 23, 21, 21),
-          ),
+        title: Row(
+          children: [
+            Text(
+              "Hello $userName",
+              style: const TextStyle(
+                fontSize: 18,
+                color: Color.fromARGB(255, 23, 21, 21),
+              ),
+            ),
+            SizedBox(
+              width: 100,
+            ),
+            ElevatedButton.icon(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                      Color.fromARGB(255, 203, 202, 197))),
+              onPressed: (() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AirQualityPage()),
+                );
+              }),
+              icon: Icon(Icons.air, color: Colors.black),
+              label: Text(
+                'AQI',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ],
         ),
       ),
       body: Stack(
@@ -194,7 +218,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Container(
               alignment: Alignment.topCenter,
               padding: const EdgeInsets.only(
-                  top: 90, left: 60, right: 60), // Adjust padding
+                  top: 130, left: 60, right: 60), // Adjust padding
 
               child: Indicator(
                 percent: calculatedPercent,
@@ -205,28 +229,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           const SizedBox(
             height: 200,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 420, left: 115, right: 60),
-            child: Container(
-              height: 90,
-              width: 150,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(147, 94, 129, 123),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: ElevatedButton.icon(
-                onPressed: (() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AirQualityPage()),
-                  );
-                }),
-                icon: Icon(Icons.air),
-                label: Text('AQI'),
-              ),
-            ),
-          ),
-
           // const Positioned.fill(
           //   child: CloudAnimation(),
           // ),

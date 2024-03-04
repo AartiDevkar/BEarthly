@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
 class AirQualityPage extends StatefulWidget {
@@ -21,9 +22,16 @@ class _AirQualityPageState extends State<AirQualityPage> {
 
   Future<void> fetchAirQualityData() async {
     const apiKey = '4208741947349e4b8565338e4d4427de74fa0c4b';
-    const apiUrl = 'https://api.waqi.info/feed/here/?token=$apiKey';
 
     try {
+      // Get current position
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      // Fetch air quality data using current location
+      String apiUrl =
+          'https://api.waqi.info/feed/geo:${position.latitude};${position.longitude}/?token=$apiKey';
+
       final response = await http.get(Uri.parse(apiUrl));
 
       if (response.statusCode == 200) {
@@ -49,19 +57,60 @@ class _AirQualityPageState extends State<AirQualityPage> {
   }
 
   Color getAqiColor(int aqi) {
-    if (aqi <= 50) {
+    if (aqi >= 0 && aqi <= 50) {
       return Colors.green;
-    } else if (aqi <= 100) {
+    } else if (aqi >= 51 && aqi <= 100) {
       return Colors.yellow;
-    } else if (aqi <= 150) {
-      return Color.fromARGB(255, 231, 163, 29);
-    } else if (aqi <= 200) {
+    } else if (aqi >= 101 && aqi <= 150) {
+      return Color.fromARGB(255, 231, 123, 29);
+    } else if (aqi >= 151 && aqi <= 200) {
       return Colors.red;
-    } else if (aqi <= 300) {
-      return Colors.purple;
+    } else if (aqi >= 201 && aqi <= 300) {
+      return Color.fromARGB(255, 142, 22, 50);
     } else {
-      return Colors.brown;
+      return Color.fromARGB(255, 78, 4, 70);
     }
+  }
+
+  String getLevel(int aqi) {
+    if (aqi >= 0 && aqi <= 50) {
+      return 'Good';
+    } else if (aqi >= 51 && aqi <= 100) {
+      return 'Moderate';
+    } else if (aqi >= 101 && aqi <= 150) {
+      return 'Unhealthy for Sensitive Groups';
+    } else if (aqi >= 151 && aqi <= 200) {
+      return 'Unhealthy';
+    } else if (aqi >= 201 && aqi <= 300) {
+      return 'Very Unhealthy';
+    } else {
+      return 'Hazardous';
+    }
+  }
+
+  Widget _buildAQILegendItem(int minAqi, int maxAqi) {
+    return Column(
+      children: [
+        Container(
+          width: 30,
+          height: 30,
+          color: getAqiColor((minAqi + maxAqi) ~/ 2),
+        ),
+        SizedBox(height: 5),
+        Text(
+          '$minAqi - $maxAqi',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          getLevel((minAqi + maxAqi) ~/ 2),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -114,8 +163,9 @@ class _AirQualityPageState extends State<AirQualityPage> {
                                     Text(
                                       'AQI in $city: ${aqi.toString()}',
                                       style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
+                                        fontSize: 30,
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
                                         fontWeight: FontWeight.bold,
                                       ),
                                       textAlign: TextAlign.center,
@@ -151,9 +201,16 @@ class _AirQualityPageState extends State<AirQualityPage> {
                                   crossAxisCount: 3,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
-                                  children: List.generate(6, (index) {
-                                    return _buildAQILegendItem(index * 50);
-                                  }),
+                                  children: [
+                                    _buildAQILegendItem(0, 50), // Good
+                                    _buildAQILegendItem(51, 100), // Moderate
+                                    _buildAQILegendItem(101,
+                                        150), // Unhealthy for Sensitive Groups
+                                    _buildAQILegendItem(151, 200), // Unhealthy
+                                    _buildAQILegendItem(
+                                        201, 300), // Very Unhealthy
+                                    _buildAQILegendItem(301, 500), // Hazardous
+                                  ],
                                 ),
                               ),
                             ],
@@ -163,47 +220,6 @@ class _AirQualityPageState extends State<AirQualityPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildAQILegendItem(int aqi) {
-    Color color = getAqiColor(aqi);
-    String level;
-    if (aqi == 0) {
-      level = 'Good';
-    } else if (aqi == 50) {
-      level = 'Moderate';
-    } else if (aqi == 100) {
-      level = 'Unhealthy for Sensitive Groups';
-    } else if (aqi == 150) {
-      level = 'Unhealthy';
-    } else if (aqi == 200) {
-      level = 'Very Unhealthy';
-    } else {
-      level = 'Hazardous';
-    }
-
-    return Column(
-      children: [
-        Container(
-          width: 30,
-          height: 30,
-          color: color,
-        ),
-        SizedBox(height: 5),
-        Text(
-          '$aqi - ${(aqi + 50).toString()}',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          level,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
     );
   }
 }
