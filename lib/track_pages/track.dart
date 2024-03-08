@@ -27,12 +27,8 @@ class _TrackState extends State<Track> {
               SizedBox(
                 height: 5,
               ),
-              // BarGraph(
-              //   barGroups: const [],
-              // ),
-              CarbonReductionGoalWidget(),
-
-              SizedBox(height: 30), // Add some space between charts
+              CarbonReductionProgressWidget(),
+              SizedBox(height: 30),
               Piechart()
             ],
           ),

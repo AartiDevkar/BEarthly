@@ -135,7 +135,7 @@ class _AirQualityPageState extends State<AirQualityPage> {
         child: Column(
           children: [
             SizedBox(
-              height: 570,
+              height: 600,
               width: 350,
               child: Card(
                 elevation: 2.0,
@@ -151,7 +151,7 @@ class _AirQualityPageState extends State<AirQualityPage> {
                             children: [
                               Padding(padding: EdgeInsets.all(5.0)),
                               Container(
-                                height: 300,
+                                height: 320,
                                 width: 250,
                                 padding: EdgeInsets.all(30),
                                 decoration: BoxDecoration(

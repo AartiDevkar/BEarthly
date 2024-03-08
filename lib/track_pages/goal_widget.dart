@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CarbonReductionGoalWidget extends StatefulWidget {
+class CarbonReductionProgressWidget extends StatefulWidget {
   @override
-  _CarbonReductionGoalWidgetState createState() =>
-      _CarbonReductionGoalWidgetState();
+  _CarbonReductionProgresssWidgetState createState() =>
+      _CarbonReductionProgresssWidgetState();
 }
 
-class _CarbonReductionGoalWidgetState extends State<CarbonReductionGoalWidget> {
+class _CarbonReductionProgresssWidgetState
+    extends State<CarbonReductionProgressWidget> {
   @override
   void initState() {
     super.initState();
@@ -46,6 +47,7 @@ class _CarbonReductionGoalWidgetState extends State<CarbonReductionGoalWidget> {
   }
 
   void _updateProgress() {
+    bool reachedMax = false;
     calculatedPercent = 0.0; // Reset progress
     if (percents.length >= 2) {
       for (int i = 1; i < percents.length; i++) {
@@ -56,7 +58,39 @@ class _CarbonReductionGoalWidgetState extends State<CarbonReductionGoalWidget> {
       }
       calculatedPercent =
           calculatedPercent.clamp(0.0, 1.0); // Clamp between 0 and 1
+      if (calculatedPercent >= 1.0) {
+        reachedMax = true;
+        calculatedPercent = 0.0; // Reset progress to 0
+      }
     }
+
+    setState(() {
+      if (reachedMax) {
+        // Show cool widget or perform any action when 100% progress is reached
+        _showCoolWidget();
+      }
+    });
+  }
+
+  void _showCoolWidget() {
+    // Show the cool widget here, you can use a dialog, snackbar, or any other widget
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Congratulations!'),
+          content: Text('You have reached 100% progress.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -157,17 +191,17 @@ class _CarbonReductionGoalWidgetState extends State<CarbonReductionGoalWidget> {
                   ],
                 )),
                 GestureDetector(
-                  child: Row(children: [
+                  child: const Row(children: [
                     Text(
                       "  Lets reduce our emissions ",
                       style: TextStyle(
                           fontSize: 20,
-                          color: const Color.fromARGB(255, 34, 121, 108),
+                          color: Color.fromARGB(255, 34, 121, 108),
                           fontWeight: FontWeight.w500),
                     ),
                     Icon(
                       Icons.arrow_forward,
-                      color: const Color.fromARGB(255, 34, 121, 108),
+                      color: Color.fromARGB(255, 34, 121, 108),
                     )
                   ]),
                   onTap: () {

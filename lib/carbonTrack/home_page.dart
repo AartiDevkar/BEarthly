@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // Initialize the animation controller
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
 
     // Define the animation curve
@@ -161,6 +161,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -172,25 +173,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Text(
               "Hello $userName",
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 color: Color.fromARGB(255, 23, 21, 21),
               ),
             ),
             SizedBox(
-              width: 100,
+              width: screenWidth / 13.0,
             ),
             ElevatedButton.icon(
-              style: ButtonStyle(
+              style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
-                      Color.fromARGB(255, 203, 202, 197))),
+                      Color.fromARGB(255, 178, 239, 127))),
               onPressed: (() {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AirQualityPage()),
                 );
               }),
-              icon: Icon(Icons.air, color: Colors.black),
-              label: Text(
+              icon: const Icon(Icons.air, color: Colors.black),
+              label: const Text(
                 'AQI',
                 style: TextStyle(color: Colors.black),
               ),
@@ -240,7 +241,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           onPressed: _openSurveyForm,
           label: const Text('Take Survey'),
           icon: const Icon(Icons.assignment),
-          backgroundColor: Color.fromARGB(255, 141, 230, 174),
+          backgroundColor: const Color.fromARGB(255, 141, 230, 174),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

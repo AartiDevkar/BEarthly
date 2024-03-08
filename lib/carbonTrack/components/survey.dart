@@ -98,14 +98,12 @@ class _SurveyState extends State<Survey> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+      data:
+          MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(0.90)),
       child: Container(
-        height: 600,
-        width: 980,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(''),
-            backgroundColor: Colors.teal,
+            backgroundColor: const Color.fromARGB(255, 191, 228, 228),
           ),
           body: Container(
             child: PageView.builder(
@@ -158,17 +156,16 @@ class _SurveyState extends State<Survey> {
                         recycleFootprints);
 
                     // Update the pie chart with the new footprints
-                    setState(() {});
+                    setState(() {
+                      Navigator.of(context).pop();
+                      double clampedValue =
+                          max(0, min(100, totalCarbonFootprint));
+                      double normalizedValue = clampedValue / 100;
 
-                    double clampedValue =
-                        max(0, min(100, totalCarbonFootprint));
-                    double normalizedValue = clampedValue / 100;
-
-                    double calculatedPercent = normalizedValue;
-                    widget.onSurveyCompleted(
-                        calculatedPercent, totalCarbonFootprint);
-
-                    Navigator.of(context).pop();
+                      double calculatedPercent = normalizedValue;
+                      widget.onSurveyCompleted(
+                          calculatedPercent, totalCarbonFootprint);
+                    });
                   },
                   child: Icon(Icons.check),
                 ),

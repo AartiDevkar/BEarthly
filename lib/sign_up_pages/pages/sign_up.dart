@@ -54,7 +54,7 @@ class _SignupState extends State<Signup> {
         // Store the authenticated user in the _user variable
         _user = userCredential.user;
 
-        if (_user != null && _user!.emailVerified) {
+        if (_user != null) {
           // Now, you can store the user's name separately
           String username = nameController.text;
 

@@ -55,7 +55,7 @@ class _ConnectState extends State<Connect> {
           ElevatedButton(
             style: const ButtonStyle(
               backgroundColor:
-                  MaterialStatePropertyAll(Color.fromARGB(255, 206, 242, 232)),
+                  MaterialStatePropertyAll(Color.fromARGB(255, 178, 239, 127)),
             ),
             onPressed: () => Navigator.push(
               context,
@@ -64,7 +64,7 @@ class _ConnectState extends State<Connect> {
               ),
             ),
             child: const Text(
-              'Lets read whats new going on in world',
+              'News',
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
@@ -154,6 +154,8 @@ class PostItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -178,7 +180,7 @@ class PostItem extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 300,
+                width: screenWidth / 1.3,
                 child: Text(
                   ngo.ngoName,
                   style: const TextStyle(
