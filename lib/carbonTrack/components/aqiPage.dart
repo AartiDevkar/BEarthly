@@ -21,7 +21,7 @@ class _AirQualityPageState extends State<AirQualityPage> {
   }
 
   Future<void> fetchAirQualityData() async {
-    const apiKey = '4208741947349e4b8565338e4d4427de74fa0c4b';
+    const apiKey = 'apikey';
 
     try {
       // Get current position
