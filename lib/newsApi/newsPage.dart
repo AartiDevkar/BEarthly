@@ -28,7 +28,7 @@ class _EnvironmentArticlesPageState extends State<EnvironmentArticlesPage> {
     });
 
     final String apiUrl =
-        'https://content.guardianapis.com/search?q=environment&api-key=b126f04a-4f03-4739-ae31-d92fc5bbfcc0';
+        'https://content.guardianapis.com/search?q=environment&api-key=apikey';
 
     try {
       final http.Response response = await http.get(Uri.parse(apiUrl));
