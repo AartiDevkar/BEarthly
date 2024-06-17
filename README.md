@@ -4,10 +4,17 @@ Bearthly is a carbon footprint tracking app developed using Flutter and Firebase
 
 ## Features
 
-- **Carbon Footprint Calculation**: Track and calculate your carbon footprint based on your activities and habits.
-- **Recommendations**: Receive personalized suggestions to reduce your carbon footprint.
-- **Real-time AQI**: Get live updates on the Air Quality Index using a reliable API.
-- **Environmental News**: Stay informed with the latest environmental news from The Guardian.
+- **Track**: 
+  - **Carbon Footprint Calculation**: Track and calculate your carbon footprint based on your activities and habits.
+  - **Progress Monitoring**: Know your progress over time with detailed tracking.
+
+- **Reduce**:
+  - **Recommendations**: Receive suggestions to reduce your carbon footprint.
+  - **Real-time AQI**: Get live updates on the Air Quality Index using a reliable API.
+
+- **Connect**:
+  - **Environmental News**: Stay informed with the latest environmental news from The Guardian.
+  - **Organization Connections**: Connect with organizations working towards environmental sustainability.
 
 ## Technologies Used
 
